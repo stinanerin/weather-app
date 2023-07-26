@@ -1,19 +1,29 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 
-import { getLocation, fetchData } from "./helpers/helper";
+import {
+    getLocation,
+    fetchData,
+    formatDate,
+    getWeekday,
+} from "./helpers/helper";
 
-// Define the type for the location data
 interface LocationData {
     locality: string;
     city: string;
-    // Add other location details here if needed
+}
+interface CurrentWeatherData {
+    time: string;
+    temperature: number;
+}
+
+interface WeatherData {
+    current_weather: CurrentWeatherData;
 }
 
 const App = () => {
     const [isLoading, setIsLoading] = useState(true);
 
-    const [weatherData, setWeatherData] = useState(null);
+    const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
     const [location, setLocation] = useState<LocationData | null>(null);
 
     const [latitude, setLatitude] = useState<number | null>(null);
@@ -55,10 +65,10 @@ const App = () => {
 
             const getWeatherData = async () => {
                 try {
-                    const url = `${BASE_URL}&latitude=${latitude}&longitude=${longitude}`
-                    const res = await fetchData(url)
+                    const url = `${BASE_URL}&latitude=${latitude}&longitude=${longitude}`;
+                    const res = await fetchData(url);
 
-                    if (res === undefined || res.status !== 200 ) {
+                    if (res === undefined || res.status !== 200) {
                         throw new Error("Failed to fetch weather data");
                     }
                     setWeatherData(res.data);
@@ -88,18 +98,23 @@ const App = () => {
         <div className="app-container">
             {isLoading ? (
                 <p>Loading...</p>
+            ) : weatherData && location ? (
+                <>
+                    <div className="current-temp-overview">
+                        <h2>
+                            {location.locality}, {location.city}
+                        </h2>
+
+                        <p>
+                            {getWeekday(weatherData.current_weather.time)}{" "}
+                            {formatDate(weatherData.current_weather.time)}
+                        </p>
+
+                        <p>{weatherData.current_weather.temperature}°</p>
+                    </div>
+                </>
             ) : (
-                weatherData && (
-                    <>
-                        {location && (
-                            <>
-                                <h2>
-                                    {location.locality}, {location.city}
-                                </h2>
-                            </>
-                        )}{" "}
-                    </>
-                )
+                <p>No data available...</p>
             )}
         </div>
     );
