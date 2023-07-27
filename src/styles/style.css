@@ -64,10 +64,20 @@ ul {
   align-items: center;
   gap: 1rem;
 }
-.weekly-forecast .forecast-card .temp-cell {
+.weekly-forecast .forecast-card .weather-cell {
+  display: flex;
+  gap: 3.3rem;
+}
+.weekly-forecast .forecast-card .weather-cell .temp-cell {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  min-width: 50px;
   justify-content: space-between;
+}
+.weekly-forecast .forecast-card .weather-cell svg {
+  align-self: center;
+  height: 1.5rem;
 }
 .weekly-forecast .forecast-card:hover {
   cursor: pointer;

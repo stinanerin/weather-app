@@ -7,7 +7,6 @@
     text-align: center;
 }
 
-
 .weekly-forecast {
     width: 100%;
 
@@ -26,10 +25,20 @@
             align-items: center;
             gap: 1rem;
         }
-        .temp-cell {
+        .weather-cell  {
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            gap: 3.3rem;
+            .temp-cell {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                min-width: 50px;
+                justify-content: space-between;
+            }
+            svg {
+                align-self: center;
+                height: 1.5rem;
+            }
         }
         &:hover {
             cursor: pointer;
