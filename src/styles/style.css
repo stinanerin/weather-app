@@ -17,6 +17,10 @@ body {
   color: hsl(0deg, 0%, 100%);
 }
 
+p {
+  margin: 0;
+}
+
 li {
   list-style-type: none;
 }

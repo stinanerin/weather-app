@@ -111,7 +111,7 @@ const App = () => {
                         <p>{weatherData.current_weather.temperature}°</p>
                     </div>
 
-
+                    
 
                     <WeeklyOverview forecast={weatherData} />
 

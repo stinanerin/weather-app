@@ -1,8 +1,7 @@
-import React from "react";
 import { getWeekday, formatDate } from "../helpers/helper";
 
 /* Props - Interface
-    Passing data to components 
+    * Enables passing data to components 
 */
 
 interface WeatherObj {
@@ -25,8 +24,7 @@ interface Props {
     forecast: WeatherObj;
 }
 
-const WeeklyOverview = ({ forecast }: Props) => {
-    //todo break out funciton
+const generateWeeklyTemperatureData = (forecast: WeatherObj) => {
     const currentTime = new Date(forecast.current_weather.time);
 
     console.log(currentTime);
@@ -44,20 +42,28 @@ const WeeklyOverview = ({ forecast }: Props) => {
             dayTempArr,
         });
     }
-    console.log(weekTempArr);
+    return weekTempArr
+};
+
+const WeeklyOverview = ({ forecast }: Props) => {
+
+    const weeklyForecast = generateWeeklyTemperatureData(forecast);
 
     return (
         <ul className="weekly-forecast">
-            {weekTempArr.map((day) => {
+            {weeklyForecast.map((day) => {
                 return (
-                    <li key={day.dayTempArr.join(",")} className="forecast-card">
+                    <li
+                        key={day.dayTempArr.join(",")}
+                        className="forecast-card"
+                    >
                         <div className="date-cell">
                             <h3> {getWeekday(day.date)}</h3>
                             <p> {formatDate(day.date)}</p>
                         </div>
                         <div className="temp-cell">
-                            <div>{Math.max(...day.dayTempArr)}°</div>
-                            <div>{Math.min(...day.dayTempArr)}°</div>
+                            <p>{Math.max(...day.dayTempArr)}°</p>
+                            <p>{Math.min(...day.dayTempArr)}°</p>
                         </div>
                     </li>
                 );
