@@ -34,6 +34,16 @@ ul {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.09) 100%);
   padding: 1rem 1.5rem;
   border-radius: 1rem;
+  margin-bottom: 1rem;
+}
+
+.forecast-descriptors {
+  font-size: 0.75rem;
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  justify-content: end;
+  text-align: center;
 }
 
 .weekly-forecast {
