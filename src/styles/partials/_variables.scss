@@ -6,17 +6,21 @@ $body: "Poppins";
 $p-black: hsl(0, 0%, 0%);
 $p-white: hsl(0, 0%, 100%);
 
-$primary-bg: #20a2be;
+$primary-bg: rgb(32, 162, 190);
 
+$transparant-1: rgba(255, 255, 255, 0.30);
+$transparant-2: rgba(255, 255, 255, 0.09);
+
+$shadow: rgba(19, 89, 105, 0.197);
 
 // Radius
-
+$radius-min: 0.5rem;
 $radius: 1rem;
 
-// padding
-
+// Padding
 $padding-primary: 1rem 1.5rem;
+$padding-secondary: 0.5rem 1rem;
 
 // Gradient
 
-$gradient-1: linear-gradient(180deg, rgba(255, 255, 255, 0.30) 0%, rgba(255, 255, 255, 0.09) 100%);
+$gradient-1: linear-gradient(180deg, $transparant-1 0%, $transparant-2 100%);

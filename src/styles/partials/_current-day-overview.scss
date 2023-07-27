@@ -1,6 +1,6 @@
 .current-temp-overview {
+    @include card;
     text-align: center;
-    background: $gradient-1;
     padding: $padding-primary;
-    border-radius: $radius;
+    margin-bottom: 1rem;
 }

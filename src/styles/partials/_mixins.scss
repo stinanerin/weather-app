@@ -1,0 +1,8 @@
+
+
+@mixin card {
+    background: $gradient-1;
+    border-radius: $radius-min;
+    box-shadow: $shadow 1.95px 1.95px 2.6px;
+
+}

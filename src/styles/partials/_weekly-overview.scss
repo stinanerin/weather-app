@@ -1,0 +1,41 @@
+.forecast-descriptors {
+    font-size: 0.75rem;
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    justify-content: end;
+    text-align: center;
+}
+
+
+.weekly-forecast {
+    width: 100%;
+
+    .forecast-card {
+        margin-bottom: 1rem;
+        padding: $padding-secondary;
+        
+
+        display: flex;
+        justify-content: space-between;
+
+        @include card;
+
+        .date-cell {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .temp-cell {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        &:hover {
+            cursor: pointer;
+            background: $transparant-1;
+        }
+    }
+    
+}
+
