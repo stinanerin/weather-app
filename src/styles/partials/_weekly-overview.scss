@@ -13,15 +13,13 @@
 
     .forecast-card {
         margin-bottom: 1rem;
-        border-radius: $radius-min;
-        padding:0.5rem 1rem;
+        padding: $padding-secondary;
         
-        background: $gradient-1;
-        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 
         display: flex;
         justify-content: space-between;
 
+        @include card;
 
         .date-cell {
             display: flex;

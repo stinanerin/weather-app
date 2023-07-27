@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 body {
-  background-color: #20a2be;
+  background-color: rgb(32, 162, 190);
 }
 
 .app-container {
@@ -30,10 +30,11 @@ ul {
 }
 
 .current-temp-overview {
-  text-align: center;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.09) 100%);
+  border-radius: 0.5rem;
+  box-shadow: rgba(19, 89, 105, 0.197) 1.95px 1.95px 2.6px;
+  text-align: center;
   padding: 1rem 1.5rem;
-  border-radius: 1rem;
   margin-bottom: 1rem;
 }
 
@@ -51,12 +52,12 @@ ul {
 }
 .weekly-forecast .forecast-card {
   margin-bottom: 1rem;
-  border-radius: 0.5rem;
   padding: 0.5rem 1rem;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.09) 100%);
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   display: flex;
   justify-content: space-between;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.09) 100%);
+  border-radius: 0.5rem;
+  box-shadow: rgba(19, 89, 105, 0.197) 1.95px 1.95px 2.6px;
 }
 .weekly-forecast .forecast-card .date-cell {
   display: flex;
