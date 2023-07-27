@@ -37,12 +37,10 @@ const WeeklyOverview = ({ forecast }: Props) => {
 
     for (let i = 0; i < tempArr.length; i += 24) {
         const dayTempArr = tempArr.slice(i, i + 24);
+        const currentDate = new Date(currentTime);
+        currentDate.setDate(currentDate.getDate() + i / 24);
         weekTempArr.push({
-            date: new Date(
-                currentTime.setDate(
-                    currentTime.getDate() + (i > 0 ? i - 23 : i)
-                )
-            ),
+            date: currentDate.toISOString(),
             dayTempArr,
         });
     }
