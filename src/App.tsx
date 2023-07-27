@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { formatDate, getWeekday } from "./helpers/helper";
-import { getLocation, fetchData } from "./helpers/api";
+import { formatDate, getWeekday } from "./utility/helper";
+import { getLocation, fetchData } from "./utility/api";
 
 import WeeklyOverview from "./components/WeeklyOverview";
 
@@ -28,7 +28,7 @@ const App = () => {
     const [longitude, setLongitude] = useState<number | null>(null);
 
     const BASE_URL =
-        "https://api.open-meteo.com/v1/forecast?current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m";
+        "https://api.open-meteo.com/v1/forecast?current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m,weathercode";
 
     useEffect(() => {
         // Fetch weather data when the component mounts

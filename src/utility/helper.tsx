@@ -23,3 +23,26 @@ const weekdays = Array.from({ length: 7 }, (e, i) => {
     });
 });
 
+export const getMostFrequentNum = (arr: number[]) => {
+
+    let maxcount = 0;
+    let element_having_max_freq;
+
+    const n = arr.length
+
+    for (let i = 0; i < n; i++) {
+        let count = 0;
+        for (let j = 0; j < n; j++) {
+            if (arr[i] == arr[j])
+                count++;
+        }
+ 
+        if (count > maxcount) {
+            maxcount = count;
+            element_having_max_freq = arr[i];
+        }
+    }
+ 
+    return element_having_max_freq;
+
+}
