@@ -1,6 +1,15 @@
-.app-container {
+// * {
+//     outline: 1px solid pink;
+// }
+
+body {
     background-color: $primary-bg;
+}
+
+.app-container {
     min-height: 100vh;
+    max-width: 32.5rem;
+    margin: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -9,4 +18,13 @@
         font-family: $body;
         color: $p-white;
     }
+}
+
+// RESET
+
+li {
+    list-style-type: none;
+}
+ul {
+    padding-left: 0;
 }

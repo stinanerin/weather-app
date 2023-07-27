@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 
-import {
-    getLocation,
-    fetchData,
-    formatDate,
-    getWeekday,
-} from "./helpers/helper";
+import { formatDate, getWeekday } from "./helpers/helper";
+import { getLocation, fetchData } from "./helpers/api";
+
+import WeeklyOverview from "./components/WeeklyOverview";
 
 interface LocationData {
     locality: string;
@@ -112,10 +110,16 @@ const App = () => {
 
                         <p>{weatherData.current_weather.temperature}°</p>
                     </div>
+
+
+
+                    <WeeklyOverview forecast={weatherData} />
+
                 </>
             ) : (
                 <p>No data available...</p>
-            )}
+                )}
+
         </div>
     );
 };

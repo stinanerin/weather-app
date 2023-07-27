@@ -1,7 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-.app-container {
+body {
   background-color: #20a2be;
+}
+
+.app-container {
   min-height: 100vh;
+  max-width: 32.5rem;
+  margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,9 +17,44 @@
   color: hsl(0deg, 0%, 100%);
 }
 
+li {
+  list-style-type: none;
+}
+
+ul {
+  padding-left: 0;
+}
+
 .current-temp-overview {
   text-align: center;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.09) 100%);
   padding: 1rem 1.5rem;
   border-radius: 1rem;
+}
+
+.weekly-forecast {
+  width: 100%;
+}
+.weekly-forecast .forecast-card {
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.09) 100%);
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  display: flex;
+  justify-content: space-between;
+}
+.weekly-forecast .forecast-card .date-cell {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.weekly-forecast .forecast-card .temp-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.weekly-forecast .forecast-card:hover {
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.3);
 }/*# sourceMappingURL=style.css.map */

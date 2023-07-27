@@ -1,0 +1,33 @@
+.weekly-forecast {
+    width: 100%;
+
+    .forecast-card {
+        margin-bottom: 1rem;
+        border-radius: $radius-min;
+        padding:0.5rem 1rem;
+        
+        background: $gradient-1;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
+        display: flex;
+        justify-content: space-between;
+
+
+        .date-cell {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .temp-cell {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        &:hover {
+            cursor: pointer;
+            background: $transparant-1;
+        }
+    }
+    
+}
+
