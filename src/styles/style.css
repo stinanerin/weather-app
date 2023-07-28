@@ -1,4 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+* {
+  outline: 1px solid pink;
+}
+
 body {
   background-color: rgb(32, 162, 190);
   scroll-behavior: smooth;
@@ -99,8 +103,14 @@ ul {
 .hourly-forecast .right-cell {
   display: flex;
   text-align: center;
-  gap: 2.2rem;
+  gap: 1.7rem;
 }
 .hourly-forecast .right-cell div:last-child {
   min-width: 50px;
+}
+.hourly-forecast .right-cell .rain-cell {
+  min-width: 2rem;
+}
+.hourly-forecast .right-cell .wind-cell {
+  min-width: 2rem;
 }/*# sourceMappingURL=style.css.map */

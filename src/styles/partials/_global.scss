@@ -1,6 +1,6 @@
-// * {
-//     outline: 1px solid pink;
-// }
+* {
+    outline: 1px solid pink;
+}
 
 body {
     background-color: $primary-bg;
@@ -41,8 +41,9 @@ body {
     align-items: center;
     text-align: center;
     gap: 1rem;
-
+    
     font-size: 0.75rem;
+    
 }
 
 

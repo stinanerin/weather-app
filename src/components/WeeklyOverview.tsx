@@ -51,24 +51,17 @@ interface CurrentWeatherData {
 interface HourlyForecastWeatherObj {
     temperature_2m: number[];
     weathercode: number[];
+    windspeed_10m: number[];
+    rain: number[];
 }
-
-
-
-// interface DailyWeatherData {
-//     date: string;
-//     dayTempArr: number[];
-//     dayWeatherCodeArr: number[];
-// }
 
 const generateWeeklyTemperatureData = (forecast: WeatherObj) => {
     const currentTime = new Date(forecast.current_weather.time);
 
-    console.log(currentTime);
-
     const tempArr = forecast.hourly.temperature_2m;
-
     const weathercodeArr = forecast.hourly.weathercode;
+    const windspeedArr = forecast.hourly.windspeed_10m;
+    const rainArr = forecast.hourly.rain;
 
     const weekTempArr = [];
 
@@ -76,6 +69,8 @@ const generateWeeklyTemperatureData = (forecast: WeatherObj) => {
         const dayTempArr = tempArr.slice(i, i + 24);
 
         const dayWeatherCodeArr = weathercodeArr.slice(i, i + 24);
+        const dayWindspeedArr = windspeedArr.slice(i, i + 24);
+        const dayRainArr = rainArr.slice(i, i + 24);
 
         const currentDate = new Date(currentTime);
         currentDate.setDate(currentDate.getDate() + i / 24);
@@ -84,6 +79,8 @@ const generateWeeklyTemperatureData = (forecast: WeatherObj) => {
             date: currentDate.toISOString(),
             dayTempArr,
             dayWeatherCodeArr,
+            dayWindspeedArr,
+            dayRainArr,
         });
     }
     return weekTempArr;

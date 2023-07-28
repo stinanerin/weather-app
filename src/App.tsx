@@ -29,7 +29,7 @@ const App = () => {
     const [longitude, setLongitude] = useState<number | null>(null);
 
     const BASE_URL =
-        "https://api.open-meteo.com/v1/forecast?current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m,weathercode";
+        "https://api.open-meteo.com/v1/forecast?current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m,weathercode,rain";
 
     useEffect(() => {
         // Fetch weather data when the component mounts

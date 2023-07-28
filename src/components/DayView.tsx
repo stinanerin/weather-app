@@ -13,6 +13,8 @@ interface WetherObject {
     date: string;
     dayTempArr: number[];
     dayWeatherCodeArr: number[];
+    dayRainArr: number[];
+    dayWindspeedArr: number[];
 }
 
 const DayView = ({ weatherData }: Props) => {
@@ -20,7 +22,7 @@ const DayView = ({ weatherData }: Props) => {
     return (
         <>
             <h2>{getWeekday(weatherData.date)}</h2>
-            
+
             <ForecastDescriptors showAdditionalHeadings={true}/>
 
             <ul className="hourly-forecast">
@@ -29,15 +31,22 @@ const DayView = ({ weatherData }: Props) => {
                         <li
                             //todo? change key
                             key={index}
-                            className="forecast-card"
-                        >
+                            className="forecast-card">
+
+                            
                             <div>
-                                00:
                                 {index.toString().length > 1
                                     ? index
-                                    : "0" + index}
+                                    : "0" + index}:00
                             </div>
                             <div className="right-cell">
+
+                                <div className="wind-cell">
+                                    {weatherData.dayWindspeedArr[index]}
+                                </div>
+                                <div className="rain-cell">
+                                    {weatherData.dayRainArr[index]}
+                                </div>
                                 <FontAwesomeIcon
                                     icon={determineWeatherIcon(
                                         weatherData.dayWeatherCodeArr[index]

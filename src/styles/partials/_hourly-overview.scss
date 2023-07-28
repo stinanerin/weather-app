@@ -1,16 +1,19 @@
 .hourly-forecast {
     width: 100%;
 
-    
-
     .right-cell {
         display: flex;
         text-align: center;
-        gap: 2.2rem;
+        gap: 1.7rem;
         & div:last-child {
             min-width: 50px;
             // background-color: pink;
         }
-    }
-    
+        .rain-cell {
+            min-width: 2rem;
+        }
+        .wind-cell {
+            min-width: 2rem;
+        }
+    }    
 }
