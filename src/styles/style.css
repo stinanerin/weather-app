@@ -33,6 +33,16 @@ body {
   min-width: 3rem;
 }
 
+.forecast-descriptors {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  font-size: 0.75rem;
+}
+
 p, h3 {
   margin: 0;
 }
@@ -52,15 +62,6 @@ ul {
   text-align: center;
   padding: 1rem 1.5rem;
   margin-bottom: 1rem;
-}
-
-.forecast-descriptors {
-  font-size: 0.75rem;
-  width: 100%;
-  display: flex;
-  gap: 1rem;
-  justify-content: end;
-  text-align: center;
 }
 
 .weekly-forecast {
