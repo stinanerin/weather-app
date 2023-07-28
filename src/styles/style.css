@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 body {
   background-color: rgb(32, 162, 190);
+  scroll-behavior: smooth;
 }
 
 .app-container {
@@ -17,7 +18,20 @@ body {
   color: hsl(0deg, 0%, 100%);
 }
 
-p {
+.forecast-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.09) 100%);
+  border-radius: 0.5rem;
+  box-shadow: rgba(19, 89, 105, 0.197) 1.95px 1.95px 2.6px;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+svg {
+  align-self: center;
+  height: 1.5rem;
+}
+
+p, h3 {
   margin: 0;
 }
 
@@ -51,16 +65,12 @@ ul {
   width: 100%;
 }
 .weekly-forecast .forecast-card {
-  margin-bottom: 1rem;
-  padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.09) 100%);
-  border-radius: 0.5rem;
-  box-shadow: rgba(19, 89, 105, 0.197) 1.95px 1.95px 2.6px;
 }
 .weekly-forecast .forecast-card .date-cell {
   display: flex;
+  padding: 1rem 1.5rem;
   align-items: center;
   gap: 1rem;
 }
@@ -75,11 +85,23 @@ ul {
   min-width: 50px;
   justify-content: space-between;
 }
-.weekly-forecast .forecast-card .weather-cell svg {
-  align-self: center;
-  height: 1.5rem;
-}
 .weekly-forecast .forecast-card:hover {
   cursor: pointer;
   background: rgba(255, 255, 255, 0.3);
+}
+
+.hourly-forecast {
+  width: 100%;
+}
+.hourly-forecast .forecast-card {
+  display: flex;
+  justify-content: space-between;
+}
+.hourly-forecast .forecast-card .right-cell {
+  display: flex;
+  text-align: center;
+  gap: 3.1rem;
+}
+.hourly-forecast .forecast-card .right-cell div:last-child {
+  min-width: 50px;
 }/*# sourceMappingURL=style.css.map */

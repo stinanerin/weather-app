@@ -11,17 +11,13 @@
     width: 100%;
 
     .forecast-card {
-        margin-bottom: 1rem;
-        padding: $padding-secondary;
-        
-
+    
         display: flex;
         justify-content: space-between;
 
-        @include card;
-
         .date-cell {
             display: flex;
+            padding: $padding-primary;
             align-items: center;
             gap: 1rem;
         }
@@ -35,10 +31,7 @@
                 min-width: 50px;
                 justify-content: space-between;
             }
-            svg {
-                align-self: center;
-                height: 1.5rem;
-            }
+            
         }
         &:hover {
             cursor: pointer;

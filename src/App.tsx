@@ -5,6 +5,8 @@ import { getLocation, fetchData } from "./utility/api";
 
 import WeeklyOverview from "./components/WeeklyOverview";
 
+
+
 interface LocationData {
     locality: string;
     city: string;
@@ -120,12 +122,10 @@ const App = () => {
                     </div>
 
                     <WeeklyOverview forecast={weatherData} />
-
                 </>
             ) : (
                 <p>No data available...</p>
-                )}
-
+            )}
         </div>
     );
 };

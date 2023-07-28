@@ -1,8 +1,12 @@
+import { useState } from "react";
+
+import DayView from "./DayView";
+
 import { getWeekday, formatDate, getMostFrequentNum } from "../utility/helper";
 
 import { determineWeatherIcon } from "../utility/weatherIcons";
 
-//todo? Icons - move?
+//todo? Icons - move? to global app.tsx?
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -50,6 +54,12 @@ interface Props {
     forecast: WeatherObj;
 }
 
+// interface DailyWeatherData {
+//     date: string;
+//     dayTempArr: number[];
+//     dayWeatherCodeArr: number[];
+// }
+
 const generateWeeklyTemperatureData = (forecast: WeatherObj) => {
     const currentTime = new Date(forecast.current_weather.time);
 
@@ -79,40 +89,55 @@ const generateWeeklyTemperatureData = (forecast: WeatherObj) => {
 };
 
 const WeeklyOverview = ({ forecast }: Props) => {
+    const [selectedDate, setSelectedDate] = useState<number | null>(null);
+
     const weeklyForecast = generateWeeklyTemperatureData(forecast);
 
     console.log(weeklyForecast);
 
     return (
-        <ul className="weekly-forecast">
-            {weeklyForecast.map((day) => {
-                const weatherCode = getMostFrequentNum(day.dayWeatherCodeArr);
-                const icon: IconProp | undefined = determineWeatherIcon(
-                    typeof weatherCode === "number" ? weatherCode : 0
-                );
+        <>
+            {selectedDate ? (
+                <DayView weatherData={weeklyForecast[selectedDate]} />
+            ) : (
+                <ul className="weekly-forecast">
+                    {weeklyForecast.map((day, index) => {
+                        const weatherCode = getMostFrequentNum(
+                            day.dayWeatherCodeArr
+                        );
+                        const icon: IconProp | undefined = determineWeatherIcon(
+                            typeof weatherCode === "number" ? weatherCode : 0
+                        );
 
-                return (
-                    <li
-                        //todo? change key
-                        key={day.dayTempArr.join(",")}
-                        className="forecast-card"
-                    >
-                        <div className="date-cell">
-                            <h3> {getWeekday(day.date)}</h3>
-                            <p> {formatDate(day.date)}</p>
-                        </div>
-                        <div className="weather-cell">
-                            {icon ? <FontAwesomeIcon icon={icon} /> : null}
+                        return (
+                            <li
+                                onClick={() => {
+                                    setSelectedDate(index);
+                                }}
+                                //todo? change key
+                                key={day.dayTempArr.join(",")}
+                                className="forecast-card"
+                            >
+                                <div className="date-cell">
+                                    <h3> {getWeekday(day.date)}</h3>
+                                    <p> {formatDate(day.date)}</p>
+                                </div>
+                                <div className="weather-cell">
+                                    {icon ? (
+                                        <FontAwesomeIcon icon={icon} />
+                                    ) : null}
 
-                            <div className="temp-cell">
-                                <p>{Math.max(...day.dayTempArr)}°</p>
-                                <p>{Math.min(...day.dayTempArr)}°</p>
-                            </div>
-                        </div>
-                    </li>
-                );
-            })}
-        </ul>
+                                    <div className="temp-cell">
+                                        <p>{Math.max(...day.dayTempArr)}°</p>
+                                        <p>{Math.min(...day.dayTempArr)}°</p>
+                                    </div>
+                                </div>
+                            </li>
+                        );
+                    })}
+                </ul>
+            )}
+        </>
     );
 };
 

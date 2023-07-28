@@ -4,6 +4,7 @@
 
 body {
     background-color: $primary-bg;
+    scroll-behavior: smooth;
 }
 
 .app-container {
@@ -20,9 +21,20 @@ body {
     }
 }
 
+.forecast-card {
+    @include card;
+    margin-bottom: 1rem;
+    padding: $padding-secondary;
+}
+
+svg {
+    align-self: center;
+    height: 1.5rem;
+}
+
 // RESET
 
-p {
+p, h3{
     margin: 0;
 }
 
@@ -33,3 +45,6 @@ li {
 ul {
     padding-left: 0;
 }
+
+
+
