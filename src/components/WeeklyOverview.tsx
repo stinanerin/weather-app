@@ -91,7 +91,7 @@ const WeeklyOverview = ({ forecast }: Props) => {
 
     const weeklyForecast = generateWeeklyTemperatureData(forecast);
 
-    console.log(weeklyForecast);
+    // console.log(weeklyForecast);
 
     return (
         <>

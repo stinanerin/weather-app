@@ -4,6 +4,7 @@ import { formatDate, getWeekday } from "./utility/helper";
 import { getLocation, fetchData } from "./utility/api";
 
 import WeeklyOverview from "./components/WeeklyOverview";
+import Search from "./components/Search";
 
 
 interface LocationData {
@@ -95,10 +96,13 @@ const App = () => {
 
     return (
         <div className="app-container">
+
+            <Search />
+
             {isLoading ? (
                 <p>Loading...</p>
-            ) : weatherData && location ? (
-                <>
+                ) : weatherData && location ? (
+                    <>
                     <div className="current-temp-overview">
                         <h2>
                             {location.locality}, {location.city}
