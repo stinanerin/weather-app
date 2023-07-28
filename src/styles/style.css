@@ -24,11 +24,13 @@ body {
   box-shadow: rgba(19, 89, 105, 0.197) 1.95px 1.95px 2.6px;
   margin-bottom: 1rem;
   padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
 }
-
-svg {
+.forecast-card svg {
   align-self: center;
   height: 1.5rem;
+  min-width: 3rem;
 }
 
 p, h3 {
@@ -76,7 +78,7 @@ ul {
 }
 .weekly-forecast .forecast-card .weather-cell {
   display: flex;
-  gap: 3.3rem;
+  gap: 2.4rem;
 }
 .weekly-forecast .forecast-card .weather-cell .temp-cell {
   display: flex;
@@ -93,15 +95,11 @@ ul {
 .hourly-forecast {
   width: 100%;
 }
-.hourly-forecast .forecast-card {
-  display: flex;
-  justify-content: space-between;
-}
-.hourly-forecast .forecast-card .right-cell {
+.hourly-forecast .right-cell {
   display: flex;
   text-align: center;
-  gap: 3.1rem;
+  gap: 2.2rem;
 }
-.hourly-forecast .forecast-card .right-cell div:last-child {
+.hourly-forecast .right-cell div:last-child {
   min-width: 50px;
 }/*# sourceMappingURL=style.css.map */
