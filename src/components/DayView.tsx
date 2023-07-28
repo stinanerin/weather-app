@@ -1,6 +1,8 @@
 import { getWeekday } from "../utility/helper";
 import { determineWeatherIcon } from "../utility/weatherIcons";
 
+import ForecastDescriptors from "./ForecastDescriptors";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Props {
@@ -18,6 +20,9 @@ const DayView = ({ weatherData }: Props) => {
     return (
         <>
             <h2>{getWeekday(weatherData.date)}</h2>
+            
+            <ForecastDescriptors showAdditionalHeadings={true}/>
+
             <ul className="hourly-forecast">
                 {weatherData.dayTempArr.map((temp, index) => {
                     return (

@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import ForecastDescriptors from "./ForecastDescriptors";
 import DayView from "./DayView";
 
 import { getWeekday, formatDate, getMostFrequentNum } from "../utility/helper";
@@ -33,10 +34,18 @@ library.add(
  * Enables passing data to components
  */
 
+interface Props {
+    // Typeannotation
+    forecast: WeatherObj;
+}
 interface WeatherObj {
     // typeannotation...
     current_weather: CurrentWeatherData;
     hourly: HourlyForecastWeatherObj;
+}
+interface CurrentWeatherData {
+    time: string;
+    temperature: number;
 }
 
 interface HourlyForecastWeatherObj {
@@ -44,15 +53,7 @@ interface HourlyForecastWeatherObj {
     weathercode: number[];
 }
 
-interface CurrentWeatherData {
-    time: string;
-    temperature: number;
-}
 
-interface Props {
-    // typeannotation...
-    forecast: WeatherObj;
-}
 
 // interface DailyWeatherData {
 //     date: string;
@@ -100,42 +101,44 @@ const WeeklyOverview = ({ forecast }: Props) => {
             {selectedDate ? (
                 <DayView weatherData={weeklyForecast[selectedDate]} />
             ) : (
-                <ul className="weekly-forecast">
-                    {weeklyForecast.map((day, index) => {
-                        const weatherCode = getMostFrequentNum(
-                            day.dayWeatherCodeArr
-                        );
-                        const icon: IconProp | undefined = determineWeatherIcon(
-                            typeof weatherCode === "number" ? weatherCode : 0
-                        );
+                <>
+                    <ForecastDescriptors showAdditionalHeadings={false} />
 
-                        return (
-                            <li
-                                onClick={() => {
-                                    setSelectedDate(index);
-                                }}
-                                //todo? change key
-                                key={day.dayTempArr.join(",")}
-                                className="forecast-card"
-                            >
-                                <div className="date-cell">
-                                    <h3> {getWeekday(day.date)}</h3>
-                                    <p> {formatDate(day.date)}</p>
-                                </div>
-                                <div className="weather-cell">
-                                    {icon ? (
-                                        <FontAwesomeIcon icon={icon} />
-                                    ) : null}
-
-                                    <div className="temp-cell">
-                                        <p>{Math.max(...day.dayTempArr)}°</p>
-                                        <p>{Math.min(...day.dayTempArr)}°</p>
+                    <ul className="weekly-forecast">
+                        {weeklyForecast.map((day, index) => {
+                            const weatherCode = getMostFrequentNum(
+                                day.dayWeatherCodeArr
+                            );
+                            const icon: IconProp | undefined = determineWeatherIcon(
+                                typeof weatherCode === "number" ? weatherCode : 0
+                            );
+                            return (
+                                <li
+                                    onClick={() => {
+                                        setSelectedDate(index);
+                                    }}
+                                    //todo? change key
+                                    key={day.dayTempArr.join(",")}
+                                    className="forecast-card"
+                                >
+                                    <div className="date-cell">
+                                        <h3> {getWeekday(day.date)}</h3>
+                                        <p> {formatDate(day.date)}</p>
                                     </div>
-                                </div>
-                            </li>
-                        );
-                    })}
-                </ul>
+                                    <div className="weather-cell">
+                                        {icon ? (
+                                            <FontAwesomeIcon icon={icon} />
+                                        ) : null}
+                                        <div className="temp-cell">
+                                            <p>{Math.max(...day.dayTempArr)}°</p>
+                                            <p>{Math.min(...day.dayTempArr)}°</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </>
             )}
         </>
     );

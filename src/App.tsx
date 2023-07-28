@@ -6,7 +6,6 @@ import { getLocation, fetchData } from "./utility/api";
 import WeeklyOverview from "./components/WeeklyOverview";
 
 
-
 interface LocationData {
     locality: string;
     city: string;
@@ -113,13 +112,6 @@ const App = () => {
                         <p>{weatherData.current_weather.temperature}°</p>
                     </div>
 
-                    <div className="forecast-descriptors">
-                        <p>Weather</p>
-                        <div>
-                            <p>Temperatures</p>
-                            <p>Max / Min</p>
-                        </div>
-                    </div>
 
                     <WeeklyOverview forecast={weatherData} />
                 </>
