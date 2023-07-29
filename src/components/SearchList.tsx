@@ -17,17 +17,6 @@ interface Props {
 }
 
 const SearchList = ({ arr, onSearchResultClick }: Props) => {
-    //! Nytt
-
-    const handleSearchResult = (
-        location: string,
-        latitude: number,
-        longitude: number
-    ) => {
-        onSearchResultClick(location, latitude, longitude);
-    };
-
-    //! Nytt
 
     const formattedSearchResults = arr.map((city) => (
         <li

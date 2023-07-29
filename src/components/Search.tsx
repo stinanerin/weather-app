@@ -6,10 +6,6 @@ import SearchList from "./SearchList";
 interface SearchProps {
     onSearchResultClick: (location: string, latitude: number, longitude: number) => void;
 }
-// interface LocationData {
-//     city: string;
-//     // country: string;
-// }
 
 const getSearchResult = async (input: string) => {
     try {
@@ -43,17 +39,6 @@ const Search = ({ onSearchResultClick }: SearchProps) => {
         console.log("searchResult in useEffect:", searchResult);
     }, [searchResult]);
 
-    //! Nytt
-
-    const handleSearchResult = (
-        location: string,
-        latitude: number,
-        longitude: number
-    ) => {
-        onSearchResultClick(location, latitude, longitude);
-    };
-
-    //! Nytt
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         // console.log(event.target.value)
@@ -80,7 +65,7 @@ const Search = ({ onSearchResultClick }: SearchProps) => {
             {searchResult && (
                 <SearchList
                     arr={searchResult}
-                    onSearchResultClick={handleSearchResult}
+                    onSearchResultClick={onSearchResultClick}
                 />
             )}
         </>
