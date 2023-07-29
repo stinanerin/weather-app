@@ -18,6 +18,7 @@ export const getLocation = async (longitude: number, latitude: number) => {
         if (res === undefined) {
             throw new Error();
         }
+        console.log(res)
         return res.data;
     } catch (error) {
         //todo

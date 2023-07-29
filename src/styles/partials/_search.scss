@@ -1,0 +1,26 @@
+input {
+    @include card;
+    border:none;
+    border-radius: $radius-max;
+    padding: $padding-secondary;
+    margin: 2em 0;
+    font-size: 12px;
+    &::placeholder {
+        font-family: $body;
+        color: $text-clr;
+    }
+}
+
+.search-results {
+    @include card;
+    padding: $padding-primary;
+    li {
+        font-size: 12px;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid $text-clr;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+}

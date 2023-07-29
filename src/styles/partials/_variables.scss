@@ -16,6 +16,7 @@ $shadow: rgba(19, 89, 105, 0.197);
 // Radius
 $radius-min: 0.5rem;
 $radius: 1rem;
+$radius-max: 50px;
 
 // Padding
 $padding-primary: 1rem 1.5rem;
@@ -24,3 +25,8 @@ $padding-secondary: 0.5rem 1rem;
 // Gradient
 
 $gradient-1: linear-gradient(180deg, $transparant-1 0%, $transparant-2 100%);
+
+
+// Color theme
+
+$text-clr: $p-white;
