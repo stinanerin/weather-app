@@ -6,11 +6,6 @@ import { getLocation, fetchData } from "./utility/api";
 import WeeklyOverview from "./components/WeeklyOverview";
 import Search from "./components/Search";
 
-
-interface LocationData {
-    locality: string;
-    city: string;
-}
 interface CurrentWeatherData {
     time: string;
     temperature: number;
@@ -18,26 +13,44 @@ interface CurrentWeatherData {
 
 interface WeatherData {
     current_weather: CurrentWeatherData;
+    hourly: {
+        temperature_2m: number[];
+        weathercode: number[];
+        windspeed_10m: number[];
+        rain: number[];
+    };
 }
 
 const App = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
-    const [location, setLocation] = useState<LocationData | null>(null);
+    const [location, setLocation] = useState<string | null>(null);
 
     const [latitude, setLatitude] = useState<number | null>(null);
     const [longitude, setLongitude] = useState<number | null>(null);
+
+    //! Nytt
+    const handleSearchResult = (
+        location: string,
+        latitude: number,
+        longitude: number
+    ) => {
+        setLatitude(latitude);
+        setLongitude(longitude);
+        setLocation(location);
+    };
+    //! Nytt
 
     const BASE_URL =
         "https://api.open-meteo.com/v1/forecast?current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m,weathercode,rain";
 
     useEffect(() => {
         // Fetch weather data when the component mounts
-        fetchWeatherData();
+        fetchCurrentLocationWeatherData();
     }, []);
 
-    const fetchWeatherData = async () => {
+    const fetchCurrentLocationWeatherData = async () => {
         try {
             const success = async (pos: GeolocationPosition) => {
                 const crd = pos.coords;
@@ -45,6 +58,7 @@ const App = () => {
                 // Update the latitude and longitude state variables
                 setLatitude(crd.latitude);
                 setLongitude(crd.longitude);
+                getLocationData(crd.latitude, crd.longitude);
             };
 
             const error = (err: GeolocationPositionError) => {
@@ -52,12 +66,33 @@ const App = () => {
                 console.warn(`ERROR(${err.code}): ${err.message}`);
             };
 
-            navigator.geolocation.getCurrentPosition(success, error);
+            const res = navigator.geolocation.getCurrentPosition(
+                success,
+                error
+            );
+            console.log(res);
+
         } catch (error) {
             console.warn("Error while fetching weather data", error);
         }
     };
-
+    
+    const getLocationData = async (
+        latitude: number,
+        longitude: number
+    ) => {
+        try {
+            if (latitude !== null && longitude !== null) {
+                const locationData = await getLocation(
+                    longitude,
+                    latitude
+                );
+                setLocation(locationData.city);
+            }
+        } catch (error) {
+            console.warn("Error while fetching location data", error);
+        }
+    };
     useEffect(() => {
         // When latitude or longitude changes, fetch weather data
         if (latitude !== null && longitude !== null) {
@@ -81,31 +116,22 @@ const App = () => {
             };
 
             getWeatherData();
-
-            const getLocationData = async () => {
-                try {
-                    const locationData = await getLocation(longitude, latitude);
-                    setLocation(locationData);
-                } catch (error) {
-                    console.warn("Error while fetching location data", error);
-                }
-            };
-            getLocationData();
         }
     }, [latitude, longitude]);
 
     return (
         <div className="app-container">
-
-            <Search />
+            <Search onSearchResultClick={handleSearchResult} />
 
             {isLoading ? (
                 <p>Loading...</p>
-                ) : weatherData && location ? (
-                    <>
+            ) : weatherData && location ? (
+                <>
+                    {console.log(location)}
                     <div className="current-temp-overview">
                         <h2>
-                            {location.locality}, {location.city}
+                            {location}
+                            {/* {location.country} */}
                         </h2>
 
                         <p>
@@ -115,7 +141,6 @@ const App = () => {
 
                         <p>{weatherData.current_weather.temperature}°</p>
                     </div>
-
 
                     <WeeklyOverview forecast={weatherData} />
                 </>
