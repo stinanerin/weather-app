@@ -93,7 +93,7 @@ const WeeklyOverview = ({ forecast }: Props) => {
 
     return (
         <>
-            {selectedDate ? (
+            {selectedDate !== null ? (
                 <DayView weatherData={weeklyForecast[selectedDate]} />
             ) : (
                 <>
