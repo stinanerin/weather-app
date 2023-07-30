@@ -47,7 +47,10 @@ const Search = ({ onSearchResultClick }: SearchProps) => {
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         // console.log(event.target.value)
+
+        // Updates input field with current search value
         setSearchValue(event.target.value);
+        // Fetches suggested results
         fetchDataAndSetResult(event.target.value);
     };
 
@@ -61,6 +64,7 @@ const Search = ({ onSearchResultClick }: SearchProps) => {
         latitude: number,
         longitude: number
     ) => {
+        // Updates app states
         onSearchResultClick(location, latitude, longitude);
          // Hide the search result list when a city is clicked
          setSearchResult(null);
@@ -69,7 +73,7 @@ const Search = ({ onSearchResultClick }: SearchProps) => {
     };
 
     return (
-        <>
+        <div>
             <input
                 type="search"
                 placeholder="Search locations"
@@ -86,7 +90,7 @@ const Search = ({ onSearchResultClick }: SearchProps) => {
                     onSearchResultClick={handleSearchResult}
                 />
             )}
-        </>
+        </div>
     );
 };
 

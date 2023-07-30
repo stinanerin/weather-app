@@ -1,26 +1,62 @@
-input {
+input, input:active, input:focus{
     @include card;
+    // Reset
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; 
+
     border:none;
     border-radius: $radius-max;
     padding: $padding-secondary;
     margin: 2em 0;
     font-size: 12px;
+
+    position: relative;
+    
     &::placeholder {
         font-family: $body;
         color: $text-clr;
+    }
+    
+    transition: all 400ms ease-in-out;
+    &:active, &:focus  {
+        width: 16rem;
     }
 }
 
 .search-results {
     @include card;
+    background-color: $primary-bg;
     padding: $padding-primary;
+
+    position: absolute;
+    top: 65px;
+    right: 1.5rem;
+
+    overflow: scroll;
+    max-height: 13rem;
+    width: 13rem;
+
     li {
         font-size: 12px;
         padding: 0.5rem 0;
-        border-bottom: 1px solid $text-clr;
+        &:not(:last-child) {
+            border-bottom: 1px solid $text-clr;
+        }
         &:hover {
             cursor: pointer;
         }
     }
+}
 
+::-webkit-scrollbar{
+    height: 0;
+    width: 8px;
+    border-radius: $radius-max;
+    background: $transparant-1;
+}
+
+::-webkit-scrollbar-thumb:vertical{
+    background: $primary-accent;
+    border-radius: $radius-max;
 }

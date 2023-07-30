@@ -1,4 +1,4 @@
-import { getWeekday } from "../utility/helper";
+import { getWeekday, formatDate } from "../utility/helper";
 import { determineWeatherIcon } from "../utility/weatherIcons";
 
 import ForecastDescriptors from "./ForecastDescriptors";
@@ -20,10 +20,13 @@ interface WetherObject {
 const DayView = ({ weatherData }: Props) => {
     console.log(weatherData);
     return (
-        <>
-            <h2>{getWeekday(weatherData.date)}</h2>
+        <div className="forecast-wrapper">
+            <h2>
+                <span>{getWeekday(weatherData.date)}</span>
+                <span>{formatDate(weatherData.date)}</span>
+            </h2>
 
-            <ForecastDescriptors showAdditionalHeadings={true}/>
+            <ForecastDescriptors showAdditionalHeadings={true} />
 
             <ul className="hourly-forecast">
                 {weatherData.dayTempArr.map((temp, index) => {
@@ -31,16 +34,15 @@ const DayView = ({ weatherData }: Props) => {
                         <li
                             //todo? change key
                             key={index}
-                            className="forecast-card">
-
-                            
+                            className="forecast-card"
+                        >
                             <div>
                                 {index.toString().length > 1
                                     ? index
-                                    : "0" + index}:00
+                                    : "0" + index}
+                                :00
                             </div>
                             <div className="right-cell">
-
                                 <div className="wind-cell">
                                     {weatherData.dayWindspeedArr[index]}
                                 </div>
@@ -58,7 +60,7 @@ const DayView = ({ weatherData }: Props) => {
                     );
                 })}
             </ul>
-        </>
+        </div>
     );
 };
 
