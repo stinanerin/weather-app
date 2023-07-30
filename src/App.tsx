@@ -116,10 +116,9 @@ const App = () => {
 
     return (
         <>
-                    <Header />
+            <Header onSearchResultClick={handleSearchResult} />
 
             <div className="app-container">
-                <Search onSearchResultClick={handleSearchResult} />
                 {isLoading ? (
                     <p>Loading...</p>
                 ) : weatherData && location ? (
@@ -142,6 +141,7 @@ const App = () => {
                     <p>No data available...</p>
                 )}
             </div>
+
             <Footer />
         </>
     );

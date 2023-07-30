@@ -121,6 +121,7 @@ input {
   padding: 0.5rem 1rem;
   margin: 2em 0;
   font-size: 12px;
+  position: relative;
 }
 input::-moz-placeholder {
   font-family: "Poppins";
@@ -139,7 +140,11 @@ input::placeholder {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.09) 100%);
   border-radius: 0.5rem;
   box-shadow: rgba(19, 89, 105, 0.197) 1.95px 1.95px 2.6px;
+  background-color: rgb(32, 162, 190);
   padding: 1rem 1.5rem;
+  position: absolute;
+  top: 65px;
+  right: 1.5rem;
 }
 .search-results li {
   font-size: 12px;

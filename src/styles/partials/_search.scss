@@ -5,6 +5,8 @@ input {
     padding: $padding-secondary;
     margin: 2em 0;
     font-size: 12px;
+
+    position: relative;
     &::placeholder {
         font-family: $body;
         color: $text-clr;
@@ -13,7 +15,13 @@ input {
 
 .search-results {
     @include card;
+    background-color: $primary-bg;
     padding: $padding-primary;
+
+    position: absolute;
+    top: 65px;
+    right: 1.5rem;
+
     li {
         font-size: 12px;
         padding: 0.5rem 0;
