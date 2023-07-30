@@ -1,0 +1,10 @@
+.header {
+    background: linear-gradient(360deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.233) 100%);   
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $padding-primary;
+    .logo {
+        height: 4rem;
+    }
+}

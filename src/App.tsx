@@ -6,6 +6,7 @@ import { getLocation, fetchData } from "./utility/api";
 import WeeklyOverview from "./components/WeeklyOverview";
 import Search from "./components/Search";
 import Footer from "./components/Footer";
+import Header from "./components/Header";
 
 interface CurrentWeatherData {
     time: string;
@@ -115,6 +116,8 @@ const App = () => {
 
     return (
         <>
+                    <Header />
+
             <div className="app-container">
                 <Search onSearchResultClick={handleSearchResult} />
                 {isLoading ? (
