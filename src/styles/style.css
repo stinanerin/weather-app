@@ -56,6 +56,14 @@ ul {
   padding-left: 0;
 }
 
+.forecast-wrapper {
+  width: 100%;
+}
+.forecast-wrapper h2 {
+  display: flex;
+  justify-content: space-between;
+}
+
 .current-temp-overview {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.09) 100%);
   border-radius: 0.5rem;
@@ -63,6 +71,7 @@ ul {
   text-align: center;
   padding: 1rem 1.5rem;
   margin-bottom: 1rem;
+  min-width: 15rem;
 }
 
 .weekly-forecast {
@@ -125,6 +134,7 @@ input, input:active, input:focus {
   margin: 2em 0;
   font-size: 12px;
   position: relative;
+  transition: all 400ms ease-in-out;
 }
 input::-moz-placeholder, input:active::-moz-placeholder, input:focus::-moz-placeholder {
   font-family: "Poppins";
@@ -138,9 +148,8 @@ input::placeholder, input:active::placeholder, input:focus::placeholder {
   font-family: "Poppins";
   color: hsl(0deg, 0%, 100%);
 }
-input:focus, input:-webkit-autofill:focus, input input:-webkit-autofill:hover, input input:hover, input:active:focus, input:active:-webkit-autofill:focus, input:active input:-webkit-autofill:hover, input:active input:hover, input:focus:focus, input:focus:-webkit-autofill:focus, input:focus input:-webkit-autofill:hover, input:focus input:hover {
-  border: none;
-  border: 1px solid rgb(2, 127, 155);
+input:active, input:focus, input:active:active, input:active:focus, input:focus:active, input:focus:focus {
+  width: 16rem;
 }
 
 .search-results {
@@ -154,7 +163,7 @@ input:focus, input:-webkit-autofill:focus, input input:-webkit-autofill:hover, i
   right: 1.5rem;
   overflow: scroll;
   max-height: 13rem;
-  max-width: 13rem;
+  width: 13rem;
 }
 .search-results li {
   font-size: 12px;

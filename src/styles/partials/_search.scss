@@ -12,14 +12,15 @@ input, input:active, input:focus{
     font-size: 12px;
 
     position: relative;
-
+    
     &::placeholder {
         font-family: $body;
         color: $text-clr;
     }
-    &:focus, &:-webkit-autofill:focus, input:-webkit-autofill:hover, input:hover {
-        border:none;
-        border: 1px solid $primary-accent;
+    
+    transition: all 400ms ease-in-out;
+    &:active, &:focus  {
+        width: 16rem;
     }
 }
 
@@ -34,7 +35,7 @@ input, input:active, input:focus{
 
     overflow: scroll;
     max-height: 13rem;
-    max-width: 13rem;
+    width: 13rem;
 
     li {
         font-size: 12px;

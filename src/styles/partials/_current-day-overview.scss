@@ -1,6 +1,15 @@
+.forecast-wrapper {
+    width: 100%;
+    h2 {
+        display: flex;
+        justify-content: space-between
+    }
+}
+
 .current-temp-overview {
     @include card;
     text-align: center;
     padding: $padding-primary;
     margin-bottom: 1rem;
+    min-width: 15rem;
 }
