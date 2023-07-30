@@ -5,6 +5,7 @@ import { getLocation, fetchData } from "./utility/api";
 
 import WeeklyOverview from "./components/WeeklyOverview";
 import Search from "./components/Search";
+import Footer from "./components/Footer";
 
 interface CurrentWeatherData {
     time: string;
@@ -71,22 +72,15 @@ const App = () => {
                 error
             );
             console.log(res);
-
         } catch (error) {
             console.warn("Error while fetching weather data", error);
         }
     };
-    
-    const getLocationData = async (
-        latitude: number,
-        longitude: number
-    ) => {
+
+    const getLocationData = async (latitude: number, longitude: number) => {
         try {
             if (latitude !== null && longitude !== null) {
-                const locationData = await getLocation(
-                    longitude,
-                    latitude
-                );
+                const locationData = await getLocation(longitude, latitude);
                 setLocation(locationData.city);
             }
         } catch (error) {
@@ -120,34 +114,33 @@ const App = () => {
     }, [latitude, longitude]);
 
     return (
-        <div className="app-container">
-            <Search onSearchResultClick={handleSearchResult} />
-
-            {isLoading ? (
-                <p>Loading...</p>
-            ) : weatherData && location ? (
-                <>
-                    {console.log(location)}
-                    <div className="current-temp-overview">
-                        <h2>
-                            {location}
-                            {/* {location.country} */}
-                        </h2>
-
-                        <p>
-                            {getWeekday(weatherData.current_weather.time)}{" "}
-                            {formatDate(weatherData.current_weather.time)}
-                        </p>
-
-                        <p>{weatherData.current_weather.temperature}°</p>
-                    </div>
-
-                    <WeeklyOverview forecast={weatherData} />
-                </>
-            ) : (
-                <p>No data available...</p>
-            )}
-        </div>
+        <>
+            <div className="app-container">
+                <Search onSearchResultClick={handleSearchResult} />
+                {isLoading ? (
+                    <p>Loading...</p>
+                ) : weatherData && location ? (
+                    <>
+                        {console.log(location)}
+                        <div className="current-temp-overview">
+                            <h2>
+                                {location}
+                                {/* {location.country} */}
+                            </h2>
+                            <p>
+                                {getWeekday(weatherData.current_weather.time)}{" "}
+                                {formatDate(weatherData.current_weather.time)}
+                            </p>
+                            <p>{weatherData.current_weather.temperature}°</p>
+                        </div>
+                        <WeeklyOverview forecast={weatherData} />
+                    </>
+                ) : (
+                    <p>No data available...</p>
+                )}
+            </div>
+            <Footer />
+        </>
     );
 };
 

@@ -3,8 +3,13 @@
 // }
 
 body {
-    background-color: $primary-bg;
     scroll-behavior: smooth;
+    margin: 0;
+    background-color: $primary-bg;
+    * {
+        font-family: $body;
+        color: $text-clr;
+    }
 }
 
 .app-container {
@@ -15,10 +20,6 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    * {
-        font-family: $body;
-        color: $text-clr;
-    }
 }
 
 .forecast-card {
