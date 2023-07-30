@@ -112,10 +112,13 @@ ul {
   min-width: 2rem;
 }
 
-input {
+input, input:active, input:focus {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.09) 100%);
   border-radius: 0.5rem;
   box-shadow: rgba(19, 89, 105, 0.197) 1.95px 1.95px 2.6px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   border: none;
   border-radius: 50px;
   padding: 0.5rem 1rem;
@@ -123,17 +126,21 @@ input {
   font-size: 12px;
   position: relative;
 }
-input::-moz-placeholder {
+input::-moz-placeholder, input:active::-moz-placeholder, input:focus::-moz-placeholder {
   font-family: "Poppins";
   color: hsl(0deg, 0%, 100%);
 }
-input:-ms-input-placeholder {
+input:-ms-input-placeholder, input:active:-ms-input-placeholder, input:focus:-ms-input-placeholder {
   font-family: "Poppins";
   color: hsl(0deg, 0%, 100%);
 }
-input::placeholder {
+input::placeholder, input:active::placeholder, input:focus::placeholder {
   font-family: "Poppins";
   color: hsl(0deg, 0%, 100%);
+}
+input:focus, input:-webkit-autofill:focus, input input:-webkit-autofill:hover, input input:hover, input:active:focus, input:active:-webkit-autofill:focus, input:active input:-webkit-autofill:hover, input:active input:hover, input:focus:focus, input:focus:-webkit-autofill:focus, input:focus input:-webkit-autofill:hover, input:focus input:hover {
+  border: none;
+  border: 1px solid rgb(2, 127, 155);
 }
 
 .search-results {
@@ -145,14 +152,31 @@ input::placeholder {
   position: absolute;
   top: 65px;
   right: 1.5rem;
+  overflow: scroll;
+  max-height: 13rem;
+  max-width: 13rem;
 }
 .search-results li {
   font-size: 12px;
   padding: 0.5rem 0;
+}
+.search-results li:not(:last-child) {
   border-bottom: 1px solid hsl(0deg, 0%, 100%);
 }
 .search-results li:hover {
   cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  height: 0;
+  width: 8px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  background: rgb(2, 127, 155);
+  border-radius: 50px;
 }
 
 .footer {

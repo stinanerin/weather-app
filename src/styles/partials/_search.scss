@@ -1,5 +1,10 @@
-input {
+input, input:active, input:focus{
     @include card;
+    // Reset
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; 
+
     border:none;
     border-radius: $radius-max;
     padding: $padding-secondary;
@@ -7,9 +12,14 @@ input {
     font-size: 12px;
 
     position: relative;
+
     &::placeholder {
         font-family: $body;
         color: $text-clr;
+    }
+    &:focus, &:-webkit-autofill:focus, input:-webkit-autofill:hover, input:hover {
+        border:none;
+        border: 1px solid $primary-accent;
     }
 }
 
@@ -22,13 +32,30 @@ input {
     top: 65px;
     right: 1.5rem;
 
+    overflow: scroll;
+    max-height: 13rem;
+    max-width: 13rem;
+
     li {
         font-size: 12px;
         padding: 0.5rem 0;
-        border-bottom: 1px solid $text-clr;
+        &:not(:last-child) {
+            border-bottom: 1px solid $text-clr;
+        }
         &:hover {
             cursor: pointer;
         }
     }
+}
 
+::-webkit-scrollbar{
+    height: 0;
+    width: 8px;
+    border-radius: $radius-max;
+    background: $transparant-1;
+}
+
+::-webkit-scrollbar-thumb:vertical{
+    background: $primary-accent;
+    border-radius: $radius-max;
 }
