@@ -42,7 +42,7 @@ const Search = ({ onSearchResultClick }: SearchProps) => {
     const [searchValue, setSearchValue] = useState<string>("");
 
     useEffect(() => {
-        console.log("searchResult in useEffect:", searchResult);
+        // console.log("searchResult in useEffect:", searchResult);
     }, [searchResult]);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +56,7 @@ const Search = ({ onSearchResultClick }: SearchProps) => {
 
     const fetchDataAndSetResult = async (input: string) => {
         const result = await getSearchResult(input);
-        console.log("result", result);
+        // console.log("result", result);
         setSearchResult(result);
     };
     const handleSearchResult = (

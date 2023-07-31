@@ -1,4 +1,4 @@
-import { getWeekday, formatDate } from "../utility/helper";
+import { getWeekday, formatDate, datesAreEqual } from "../utility/helper";
 import { determineWeatherIcon } from "../utility/weatherIcons";
 
 import ForecastDescriptors from "./ForecastDescriptors";
@@ -6,9 +6,15 @@ import ForecastDescriptors from "./ForecastDescriptors";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Props {
-    weatherData: WetherObject;
+    WeatherData: WetherObject;
 }
-
+interface weatherDay {
+    hour: string | number;
+    temp: number;
+    rain: number;
+    wind_speed: number;
+    weather_code: number;
+}
 interface WetherObject {
     date: string;
     dayTempArr: number[];
@@ -17,48 +23,85 @@ interface WetherObject {
     dayWindspeedArr: number[];
 }
 
-const DayView = ({ weatherData }: Props) => {
-    console.log(weatherData);
+const DayView = ({ WeatherData }: Props) => {
+    console.log("weatherData", WeatherData);
+
+    // Destructure the weatherData object
+    const { date, dayTempArr, dayWeatherCodeArr, dayRainArr, dayWindspeedArr } =
+        WeatherData;
+
+    const Today = new Date();
+
+    const todayisBeingRendered = datesAreEqual(new Date(date), Today);
+    const currentTime = +Today.getHours();
+
+    const dayweatherArr = dayTempArr
+        .map((temp, index) => {
+            return todayisBeingRendered && index < currentTime
+                ? null
+                : {
+                      hour: index.toString().length > 1 ? index : "0" + index,
+                      temp: temp,
+                      rain: dayRainArr[index],
+                      /* Converts wind speed from km/h to m/s */
+                      wind_speed: dayWindspeedArr[index] * 0.277777778,
+                      weather_code: dayWeatherCodeArr[index],
+                  };
+            // Think of easy way as to not iterate through array twice
+        })
+        .filter((item): item is weatherDay => item !== null) as weatherDay[];
+
+    console.log("dayweatherArr", dayweatherArr);
+
     return (
         <div className="forecast-wrapper">
             <h2>
-                <span>{getWeekday(weatherData.date)}</span>
-                <span>{formatDate(weatherData.date)}</span>
+                <span>{getWeekday(date)}</span>
+                <span>{formatDate(date)}</span>
             </h2>
 
             <ForecastDescriptors showAdditionalHeadings={true} />
 
             <ul className="hourly-forecast">
-                {weatherData.dayTempArr.map((temp, index) => {
-                    return (
-                        <li
-                            //todo? change key
-                            key={index}
-                            className="forecast-card"
-                        >
-                            <div>
-                                {index.toString().length > 1
-                                    ? index
-                                    : "0" + index}
-                                :00
-                            </div>
-                            <div className="right-cell">
-                                <div className="wind-cell">
-                                    {weatherData.dayWindspeedArr[index]}
-                                </div>
-                                <div className="rain-cell">
-                                    {weatherData.dayRainArr[index]}
-                                </div>
-                                <FontAwesomeIcon
-                                    icon={determineWeatherIcon(
-                                        weatherData.dayWeatherCodeArr[index]
-                                    )}
-                                />
-                                <div>{temp}°</div>
-                            </div>
-                        </li>
-                    );
-                })}
+                <>
+                    {dayweatherArr.map(
+                        (
+                            {
+                                hour,
+                                temp,
+                                rain,
+                                wind_speed,
+                                weather_code,
+                            }: weatherDay,
+                            index
+                        ) => {
+                            return (
+                                <li
+                                    //todo? change key
+                                    key={index}
+                                    className="forecast-card"
+                                >
+                                    <div>
+                                        {hour}
+                                        :00
+                                    </div>
+                                    <div className="right-cell">
+                                        <div className="wind-cell">
+                                            {Math.round(wind_speed)}
+                                        </div>
+                                        <div className="rain-cell">{rain}</div>
+                                        <FontAwesomeIcon
+                                            icon={determineWeatherIcon(
+                                                weather_code
+                                            )}
+                                        />
+                                        <div>{temp}°</div>
+                                    </div>
+                                </li>
+                            );
+                        }
+                    )}
+                </>
             </ul>
         </div>
     );

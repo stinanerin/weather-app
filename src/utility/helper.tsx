@@ -46,3 +46,7 @@ export const getMostFrequentNum = (arr: number[]) => {
     return element_having_max_freq;
 
 }
+
+export const datesAreEqual = (d1: Date, d2: Date) => {
+    return d1.toDateString() === d2.toDateString();
+};

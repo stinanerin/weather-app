@@ -58,6 +58,7 @@ interface HourlyForecastWeatherObj {
 const generateWeeklyTemperatureData = (forecast: WeatherObj) => {
     const currentTime = new Date(forecast.current_weather.time);
 
+    
     const tempArr = forecast.hourly.temperature_2m;
     const weathercodeArr = forecast.hourly.weathercode;
     const windspeedArr = forecast.hourly.windspeed_10m;
@@ -94,7 +95,7 @@ const WeeklyOverview = ({ forecast }: Props) => {
     return (
         <>
             {selectedDate !== null ? (
-                <DayView weatherData={weeklyForecast[selectedDate]} />
+                <DayView WeatherData={weeklyForecast[selectedDate]} />
             ) : (
                 <>
                     <ForecastDescriptors showAdditionalHeadings={false} />

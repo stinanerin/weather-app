@@ -68,11 +68,10 @@ const App = () => {
                 console.warn(`ERROR(${err.code}): ${err.message}`);
             };
 
-            const res = navigator.geolocation.getCurrentPosition(
+            navigator.geolocation.getCurrentPosition(
                 success,
                 error
-            );
-            console.log(res);
+            )
         } catch (error) {
             console.warn("Error while fetching weather data", error);
         }
@@ -123,7 +122,7 @@ const App = () => {
                     <p>Loading...</p>
                 ) : weatherData && location ? (
                     <>
-                        {console.log(location)}
+                        {/* {console.log(location)} */}
                         <div className="current-temp-overview">
                             <h2>
                                 {location}
