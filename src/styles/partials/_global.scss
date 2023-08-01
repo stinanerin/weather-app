@@ -44,7 +44,13 @@ body {
     gap: 1rem;
     
     font-size: 0.75rem;
-    
+    .wind-cell {
+        padding-right: 0.5rem;
+    }
+    .rain-cell {
+        padding-right: 0.2rem;
+
+    }
 }
 
 

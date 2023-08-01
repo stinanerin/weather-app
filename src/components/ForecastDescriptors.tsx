@@ -7,11 +7,11 @@ const ForecastDescriptors = ({ showAdditionalHeadings }: Props) => {
         <div className="forecast-descriptors">
             {showAdditionalHeadings && (
                 <>
-                    <div>
+                    <div className="wind-cell">
                         <p>Wind</p>
                         <p>(m/s)</p>
                     </div>
-                    <div>
+                    <div className="rain-cell">
                         <p>Rain</p>
                         <p>(mm)</p>
                     </div>

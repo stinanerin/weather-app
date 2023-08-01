@@ -43,7 +43,7 @@ const DayView = ({ WeatherData }: Props) => {
                       hour: index.toString().length > 1 ? index : "0" + index,
                       temp: temp,
                       rain: dayRainArr[index],
-                      wind_speed: dayWindspeedArr[index],
+                      wind_speed: Math.round(dayWindspeedArr[index]),
                       weather_code: dayWeatherCodeArr[index],
                   };
             // Think of easy way as to not iterate through array twice
@@ -86,7 +86,7 @@ const DayView = ({ WeatherData }: Props) => {
                                     </div>
                                     <div className="right-cell">
                                         <div className="wind-cell">
-                                            {Math.round(wind_speed)}
+                                            {wind_speed}
                                         </div>
                                         <div className="rain-cell">{rain}</div>
                                         <FontAwesomeIcon

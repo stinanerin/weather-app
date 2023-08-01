@@ -43,6 +43,12 @@ body * {
   gap: 1rem;
   font-size: 0.75rem;
 }
+.forecast-descriptors .wind-cell {
+  padding-right: 0.5rem;
+}
+.forecast-descriptors .rain-cell {
+  padding-right: 0.2rem;
+}
 
 p, h3 {
   margin: 0;
@@ -131,7 +137,6 @@ input, input:active, input:focus {
   border: none;
   border-radius: 50px;
   padding: 0.5rem 1rem;
-  margin: 2em 0;
   font-size: 12px;
   position: relative;
   transition: all 400ms ease-in-out;
