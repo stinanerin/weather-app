@@ -43,8 +43,7 @@ const DayView = ({ WeatherData }: Props) => {
                       hour: index.toString().length > 1 ? index : "0" + index,
                       temp: temp,
                       rain: dayRainArr[index],
-                      /* Converts wind speed from km/h to m/s */
-                      wind_speed: dayWindspeedArr[index] * 0.277777778,
+                      wind_speed: dayWindspeedArr[index],
                       weather_code: dayWeatherCodeArr[index],
                   };
             // Think of easy way as to not iterate through array twice

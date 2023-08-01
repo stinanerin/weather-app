@@ -30,7 +30,7 @@ library.add(
     faCloudShowersHeavy
 );
 
-/* Props - Interface
+/* Interface:
  * Enables passing data to components
  */
 
@@ -41,6 +41,7 @@ interface Props {
 interface WeatherObj {
     // typeannotation...
     current_weather: CurrentWeatherData;
+    // daily: WeeklyWeatherObj;
     hourly: HourlyForecastWeatherObj;
 }
 interface CurrentWeatherData {
@@ -54,14 +55,17 @@ interface HourlyForecastWeatherObj {
     windspeed_10m: number[];
     rain: number[];
 }
+interface WeeklyWeatherObj {
+    weathercode: number[];
+}
 
 const generateWeeklyTemperatureData = (forecast: WeatherObj) => {
     const currentTime = new Date(forecast.current_weather.time);
 
     
     const tempArr = forecast.hourly.temperature_2m;
-    const weathercodeArr = forecast.hourly.weathercode;
-    const windspeedArr = forecast.hourly.windspeed_10m;
+    const weatherCodeArr = forecast.hourly.weathercode;
+    const windSpeedArr = forecast.hourly.windspeed_10m;
     const rainArr = forecast.hourly.rain;
 
     const weekTempArr = [];
@@ -69,8 +73,8 @@ const generateWeeklyTemperatureData = (forecast: WeatherObj) => {
     for (let i = 0; i < tempArr.length; i += 24) {
         const dayTempArr = tempArr.slice(i, i + 24);
 
-        const dayWeatherCodeArr = weathercodeArr.slice(i, i + 24);
-        const dayWindspeedArr = windspeedArr.slice(i, i + 24);
+        const dayWeatherCodeArr = weatherCodeArr.slice(i, i + 24);
+        const dayWindspeedArr = windSpeedArr.slice(i, i + 24);
         const dayRainArr = rainArr.slice(i, i + 24);
 
         const currentDate = new Date(currentTime);
@@ -91,6 +95,8 @@ const WeeklyOverview = ({ forecast }: Props) => {
     const [selectedDate, setSelectedDate] = useState<number | null>(null);
 
     const weeklyForecast = generateWeeklyTemperatureData(forecast);
+
+    console.log(forecast)
 
     return (
         <>

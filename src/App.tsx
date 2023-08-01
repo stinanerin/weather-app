@@ -4,7 +4,6 @@ import { formatDate, getWeekday } from "./utility/helper";
 import { getLocation, fetchData } from "./utility/api";
 
 import WeeklyOverview from "./components/WeeklyOverview";
-import Search from "./components/Search";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 
@@ -45,7 +44,7 @@ const App = () => {
     //! Nytt
 
     const BASE_URL =
-        "https://api.open-meteo.com/v1/forecast?current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m,weathercode,rain";
+        "https://api.open-meteo.com/v1/forecast?current_weather=true&hourly=rain,temperature_2m,apparent_temperature,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,rain_sum,showers_sum,snowfall_sum&timezone=GMT";
 
     useEffect(() => {
         // Fetch weather data when the component mounts

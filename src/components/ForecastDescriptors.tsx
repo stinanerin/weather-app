@@ -19,7 +19,7 @@ const ForecastDescriptors = ({ showAdditionalHeadings }: Props) => {
             )}
             <p>Weather</p>
             <div>
-                <p>Temperatures</p>
+                <p>Temperature</p>
                 {!showAdditionalHeadings && <p>Max / Min</p>}
             </div>
         </div>
