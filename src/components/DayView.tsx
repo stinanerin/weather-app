@@ -2,6 +2,7 @@ import { getWeekday, formatDate, datesAreEqual } from "../utility/helper";
 import { determineWeatherIcon } from "../utility/weatherIcons";
 
 import ForecastDescriptors from "./ForecastDescriptors";
+import InfoCard from "./InfoCard";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -17,6 +18,7 @@ interface weatherDay {
 }
 interface WetherObject {
     date: string;
+    uv_index: number;
     dayTempArr: number[];
     dayWeatherCodeArr: number[];
     dayRainArr: number[];
@@ -27,8 +29,14 @@ const DayView = ({ WeatherData }: Props) => {
     console.log("weatherData", WeatherData);
 
     // Destructure the weatherData object
-    const { date, dayTempArr, dayWeatherCodeArr, dayRainArr, dayWindspeedArr } =
-        WeatherData;
+    const {
+        date,
+        uv_index,
+        dayTempArr,
+        dayWeatherCodeArr,
+        dayRainArr,
+        dayWindspeedArr,
+    } = WeatherData;
 
     const Today = new Date();
 
@@ -102,6 +110,8 @@ const DayView = ({ WeatherData }: Props) => {
                     )}
                 </>
             </ul>
+            <h2>Other info</h2>
+            <InfoCard heading={"UV-index"} data={uv_index} />
         </div>
     );
 };

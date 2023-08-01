@@ -21,29 +21,29 @@ const weekdays = Array.from({ length: 7 }, (e, i) => {
     });
 });
 
-export const getMostFrequentNum = (arr: number[]) => {
+// export const getMostFrequentNum = (arr: number[]) => {
 
-    let maxcount = 0;
-    let element_having_max_freq;
+//     let maxcount = 0;
+//     let element_having_max_freq;
 
-    const n = arr.length
+//     const n = arr.length
 
-    for (let i = 0; i < n; i++) {
-        let count = 0;
-        for (let j = 0; j < n; j++) {
-            if (arr[i] == arr[j])
-                count++;
-        }
+//     for (let i = 0; i < n; i++) {
+//         let count = 0;
+//         for (let j = 0; j < n; j++) {
+//             if (arr[i] == arr[j])
+//                 count++;
+//         }
  
-        if (count > maxcount) {
-            maxcount = count;
-            element_having_max_freq = arr[i];
-        }
-    }
+//         if (count > maxcount) {
+//             maxcount = count;
+//             element_having_max_freq = arr[i];
+//         }
+//     }
  
-    return element_having_max_freq;
+//     return element_having_max_freq;
 
-}
+// }
 
 export const datesAreEqual = (d1: Date, d2: Date) => {
     return d1.toDateString() === d2.toDateString();

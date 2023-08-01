@@ -3,7 +3,7 @@ import { useState } from "react";
 import ForecastDescriptors from "./ForecastDescriptors";
 import DayView from "./DayView";
 
-import { getWeekday, formatDate, getMostFrequentNum } from "../utility/helper";
+import { getWeekday, formatDate } from "../utility/helper";
 
 import { determineWeatherIcon } from "../utility/weatherIcons";
 
@@ -61,6 +61,8 @@ interface dailyWeatherSumsObj {
     weathercode: number[];
     temperature_2m_max: number[];
     temperature_2m_min: number[];
+    rain_sum: number[];
+    uv_index_max: number[];
     time: string[];
 }
 
@@ -74,8 +76,13 @@ const formatHourlyTemperatureData = (forecast: WeatherObj) => {
 
     const weekTempArr = [];
 
+    console.log(forecast.daily.uv_index_max)
+
+
     for (let i = 0; i < tempArr.length; i += 24) {
         const dayTempArr = tempArr.slice(i, i + 24);
+
+        console.log(i / 24)
 
         const dayWeatherCodeArr = weatherCodeArr.slice(i, i + 24);
         const dayWindspeedArr = windSpeedArr.slice(i, i + 24);
@@ -86,6 +93,7 @@ const formatHourlyTemperatureData = (forecast: WeatherObj) => {
 
         weekTempArr.push({
             date: currentDate.toISOString(),
+            uv_index: forecast.daily.uv_index_max[i / 24],
             dayTempArr,
             dayWeatherCodeArr,
             dayWindspeedArr,
@@ -100,12 +108,10 @@ const WeeklyOverview = ({ forecast }: Props) => {
 
     const weeklyForecast = formatHourlyTemperatureData(forecast);
 
-    console.log(forecast.daily);
+    console.log(weeklyForecast)
 
-    const { temperature_2m_max, temperature_2m_min, weathercode, time } =
+    const { temperature_2m_max, temperature_2m_min, weathercode, rain_sum, time } =
         forecast.daily;
-
-
 
     return (
         <>
@@ -133,6 +139,7 @@ const WeeklyOverview = ({ forecast }: Props) => {
                                         <p> {formatDate(day)}</p>
                                     </div>
                                     <div className="weather-cell">
+                                        <div className="rain-cell">{rain_sum[index]}</div>
                                         {icon ? (
                                             <FontAwesomeIcon icon={icon} />
                                         ) : null}

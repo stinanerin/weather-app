@@ -1,0 +1,4 @@
+.info-card {
+    @include card;
+    padding: $padding-primary;
+}
