@@ -33,6 +33,12 @@ body {
         height: 1.5rem;
         min-width: 3rem;
     }
+    .rain-cell {
+        min-width: 2rem;
+    }
+    .wind-cell {
+        min-width: 2rem;
+    }
 }
 
 .forecast-descriptors {
@@ -44,7 +50,13 @@ body {
     gap: 1rem;
     
     font-size: 0.75rem;
-    
+    .wind-cell {
+        padding-right: 0.5rem;
+    }
+    .rain-cell {
+        padding-right: 0.2rem;
+
+    }
 }
 
 

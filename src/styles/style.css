@@ -33,6 +33,12 @@ body * {
   height: 1.5rem;
   min-width: 3rem;
 }
+.forecast-card .rain-cell {
+  min-width: 2rem;
+}
+.forecast-card .wind-cell {
+  min-width: 2rem;
+}
 
 .forecast-descriptors {
   width: 100%;
@@ -42,6 +48,12 @@ body * {
   text-align: center;
   gap: 1rem;
   font-size: 0.75rem;
+}
+.forecast-descriptors .wind-cell {
+  padding-right: 0.5rem;
+}
+.forecast-descriptors .rain-cell {
+  padding-right: 0.2rem;
 }
 
 p, h3 {
@@ -77,10 +89,6 @@ ul {
 .weekly-forecast {
   width: 100%;
 }
-.weekly-forecast .forecast-card {
-  display: flex;
-  justify-content: space-between;
-}
 .weekly-forecast .forecast-card .date-cell {
   display: flex;
   padding: 1rem 1.5rem;
@@ -89,14 +97,16 @@ ul {
 }
 .weekly-forecast .forecast-card .weather-cell {
   display: flex;
-  gap: 2.4rem;
+  gap: 1.7rem;
+  align-items: center;
+  text-align: center;
 }
 .weekly-forecast .forecast-card .weather-cell .temp-cell {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  min-width: 50px;
   justify-content: space-between;
+  align-self: stretch;
+  min-width: 50px;
 }
 .weekly-forecast .forecast-card:hover {
   cursor: pointer;
@@ -114,12 +124,6 @@ ul {
 .hourly-forecast .right-cell div:last-child {
   min-width: 50px;
 }
-.hourly-forecast .right-cell .rain-cell {
-  min-width: 2rem;
-}
-.hourly-forecast .right-cell .wind-cell {
-  min-width: 2rem;
-}
 
 input, input:active, input:focus {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.09) 100%);
@@ -131,7 +135,6 @@ input, input:active, input:focus {
   border: none;
   border-radius: 50px;
   padding: 0.5rem 1rem;
-  margin: 2em 0;
   font-size: 12px;
   position: relative;
   transition: all 400ms ease-in-out;
@@ -207,4 +210,16 @@ input:active, input:focus, input:active:active, input:active:focus, input:focus:
 }
 .header .logo {
   height: 4rem;
+}
+
+.more-info-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+.more-info-wrapper .info-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.09) 100%);
+  border-radius: 0.5rem;
+  box-shadow: rgba(19, 89, 105, 0.197) 1.95px 1.95px 2.6px;
+  padding: 1rem 1.5rem;
 }/*# sourceMappingURL=style.css.map */

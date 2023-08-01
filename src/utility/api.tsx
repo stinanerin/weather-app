@@ -13,12 +13,12 @@ export const fetchData = async (url: string) => {
 
 export const getLocation = async (longitude: number, latitude: number) => {
     try {
-        const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`;
+        const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}`;
         const res = await fetchData(url);
         if (res === undefined) {
             throw new Error();
         }
-        console.log(res)
+        // console.log(res)
         return res.data;
     } catch (error) {
         //todo

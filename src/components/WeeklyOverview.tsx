@@ -3,7 +3,7 @@ import { useState } from "react";
 import ForecastDescriptors from "./ForecastDescriptors";
 import DayView from "./DayView";
 
-import { getWeekday, formatDate, getMostFrequentNum } from "../utility/helper";
+import { getWeekday, formatDate, calculateMean } from "../utility/helper";
 
 import { determineWeatherIcon } from "../utility/weatherIcons";
 
@@ -30,19 +30,25 @@ library.add(
     faCloudShowersHeavy
 );
 
-/* Props - Interface
+/* Interface:
  * Enables passing data to components
  */
 
 interface Props {
-    // Typeannotation
+    // Type annotation
     forecast: WeatherObj;
 }
 interface WeatherObj {
     // typeannotation...
     current_weather: CurrentWeatherData;
     hourly: HourlyForecastWeatherObj;
+    //!Nytt
+    daily: DailyWeatherSumsObj;
+    hourly_units: {
+        [key: string]: string;
+    };
 }
+
 interface CurrentWeatherData {
     time: string;
     temperature: number;
@@ -53,30 +59,72 @@ interface HourlyForecastWeatherObj {
     weathercode: number[];
     windspeed_10m: number[];
     rain: number[];
+    pressure_msl: number[];
+    relativehumidity_2m: number[];
+    visibility: number[];
+}
+//!Nytt
+interface DailyWeatherSumsObj {
+    weathercode: number[];
+    temperature_2m_max: number[];
+    temperature_2m_min: number[];
+    rain_sum: number[];
+    uv_index_max: number[];
+    sunrise: number[];
+    sunset: number[];
+    time: string[];
 }
 
-const generateWeeklyTemperatureData = (forecast: WeatherObj) => {
+const formatHourlyTemperatureData = (forecast: WeatherObj) => {
     const currentTime = new Date(forecast.current_weather.time);
 
-    const tempArr = forecast.hourly.temperature_2m;
-    const weathercodeArr = forecast.hourly.weathercode;
-    const windspeedArr = forecast.hourly.windspeed_10m;
-    const rainArr = forecast.hourly.rain;
+    const {
+        temperature_2m,
+        weathercode,
+        windspeed_10m,
+        rain,
+        pressure_msl,
+        visibility,
+        relativehumidity_2m,
+    } = forecast.hourly;
 
     const weekTempArr = [];
 
-    for (let i = 0; i < tempArr.length; i += 24) {
-        const dayTempArr = tempArr.slice(i, i + 24);
-
-        const dayWeatherCodeArr = weathercodeArr.slice(i, i + 24);
-        const dayWindspeedArr = windspeedArr.slice(i, i + 24);
-        const dayRainArr = rainArr.slice(i, i + 24);
+    
+    for (let i = 0; i < rain.length; i += 24) {
+        const dayTempArr = temperature_2m.slice(i, i + 24);
+        const dayWeatherCodeArr = weathercode.slice(i, i + 24);
+        const dayWindspeedArr = windspeed_10m.slice(i, i + 24);
+        const dayRainArr = rain.slice(i, i + 24);
+        const dayPressureArr = pressure_msl.slice(i, i + 24);
+        const dayVisibilityArr = visibility.slice(i, i + 24);
+        const dayHumidityArr = relativehumidity_2m.slice(i, i + 24);
 
         const currentDate = new Date(currentTime);
         currentDate.setDate(currentDate.getDate() + i / 24);
 
         weekTempArr.push({
             date: currentDate.toISOString(),
+            more_info: {
+                uv: {
+                    data: forecast.daily.uv_index_max[i / 24],
+                },
+                pressure: {
+                    data: Math.round(calculateMean(dayPressureArr)),
+                    unit: forecast.hourly_units.pressure_msl,
+                },
+                visibility: {
+                    data: Math.round(calculateMean(dayVisibilityArr)),
+                    unit: forecast.hourly_units.visibility,
+                },
+                humidity: {
+                    data: Math.round(calculateMean(dayHumidityArr)),
+                    unit: forecast.hourly_units.relativehumidity_2m,
+                },
+                // toString() for typescript
+                sunrise: { data: forecast.daily.sunrise[i / 24].toString().slice(11) },
+                sunset: { data: forecast.daily.sunset[i / 24].toString().slice(11) },
+            },
             dayTempArr,
             dayWeatherCodeArr,
             dayWindspeedArr,
@@ -89,44 +137,53 @@ const generateWeeklyTemperatureData = (forecast: WeatherObj) => {
 const WeeklyOverview = ({ forecast }: Props) => {
     const [selectedDate, setSelectedDate] = useState<number | null>(null);
 
-    const weeklyForecast = generateWeeklyTemperatureData(forecast);
+    const weeklyForecast = formatHourlyTemperatureData(forecast);
+
+    console.log(weeklyForecast);
+
+    const {
+        temperature_2m_max,
+        temperature_2m_min,
+        weathercode,
+        rain_sum,
+        time,
+    } = forecast.daily;
 
     return (
         <>
             {selectedDate !== null ? (
-                <DayView weatherData={weeklyForecast[selectedDate]} />
+                <DayView WeatherData={weeklyForecast[selectedDate]} />
             ) : (
                 <>
                     <ForecastDescriptors showAdditionalHeadings={false} />
 
                     <ul className="weekly-forecast">
-                        {weeklyForecast.map((day, index) => {
-                            const weatherCode = getMostFrequentNum(
-                                day.dayWeatherCodeArr
-                            );
-                            const icon: IconProp | undefined = determineWeatherIcon(
-                                typeof weatherCode === "number" ? weatherCode : 0
-                            );
+                        {time.map((day, index) => {
+                            const icon: IconProp | undefined =
+                                determineWeatherIcon(weathercode[index]);
                             return (
                                 <li
                                     onClick={() => {
                                         setSelectedDate(index);
                                     }}
                                     //todo? change key
-                                    key={day.dayTempArr.join(",")}
+                                    key={day}
                                     className="forecast-card"
                                 >
                                     <div className="date-cell">
-                                        <h3> {getWeekday(day.date)}</h3>
-                                        <p> {formatDate(day.date)}</p>
+                                        <h3> {getWeekday(day)}</h3>
+                                        <p> {formatDate(day)}</p>
                                     </div>
                                     <div className="weather-cell">
+                                        <div className="rain-cell">
+                                            {rain_sum[index]}
+                                        </div>
                                         {icon ? (
                                             <FontAwesomeIcon icon={icon} />
                                         ) : null}
                                         <div className="temp-cell">
-                                            <p>{Math.max(...day.dayTempArr)}°</p>
-                                            <p>{Math.min(...day.dayTempArr)}°</p>
+                                            <p>{temperature_2m_max[index]}°</p>
+                                            <p>{temperature_2m_min[index]}°</p>
                                         </div>
                                     </div>
                                 </li>

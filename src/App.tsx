@@ -4,7 +4,6 @@ import { formatDate, getWeekday } from "./utility/helper";
 import { getLocation, fetchData } from "./utility/api";
 
 import WeeklyOverview from "./components/WeeklyOverview";
-import Search from "./components/Search";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 
@@ -20,6 +19,23 @@ interface WeatherData {
         weathercode: number[];
         windspeed_10m: number[];
         rain: number[];
+        pressure_msl: number[];
+        relativehumidity_2m: number[];
+        visibility: number[];
+    };
+    daily: {
+        // [key: string]:  number[];
+        weathercode: number[];
+        temperature_2m_max: number[];
+        temperature_2m_min: number[];
+        rain_sum: number[];
+        uv_index_max: number[];
+        sunrise: number[];
+        sunset: number[];
+        time: string[];
+    }
+    hourly_units: {
+        [key: string]: string;
     };
 }
 
@@ -45,7 +61,7 @@ const App = () => {
     //! Nytt
 
     const BASE_URL =
-        "https://api.open-meteo.com/v1/forecast?current_weather=true&hourly=temperature_2m,relativehumidity_2m,windspeed_10m,weathercode,rain";
+        "https://api.open-meteo.com/v1/forecast?current_weather=true&hourly=winddirection_10m,relativehumidity_2m,pressure_msl,visibility,rain,temperature_2m,apparent_temperature,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,rain_sum,showers_sum,snowfall_sum&windspeed_unit=ms&timezone=GMT";
 
     useEffect(() => {
         // Fetch weather data when the component mounts
@@ -56,7 +72,6 @@ const App = () => {
         try {
             const success = async (pos: GeolocationPosition) => {
                 const crd = pos.coords;
-
                 // Update the latitude and longitude state variables
                 setLatitude(crd.latitude);
                 setLongitude(crd.longitude);
@@ -68,11 +83,7 @@ const App = () => {
                 console.warn(`ERROR(${err.code}): ${err.message}`);
             };
 
-            const res = navigator.geolocation.getCurrentPosition(
-                success,
-                error
-            );
-            console.log(res);
+            navigator.geolocation.getCurrentPosition(success, error);
         } catch (error) {
             console.warn("Error while fetching weather data", error);
         }
@@ -123,7 +134,7 @@ const App = () => {
                     <p>Loading...</p>
                 ) : weatherData && location ? (
                     <>
-                        {console.log(location)}
+                        {/* {console.log(location)} */}
                         <div className="current-temp-overview">
                             <h2>
                                 {location}
