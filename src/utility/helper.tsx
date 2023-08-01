@@ -1,6 +1,4 @@
 
-
-
 export const formatDate = (date: string) => {
     const dateObj = new Date(date);
     const day = dateObj.getDate();

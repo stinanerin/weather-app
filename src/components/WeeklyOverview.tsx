@@ -41,8 +41,9 @@ interface Props {
 interface WeatherObj {
     // typeannotation...
     current_weather: CurrentWeatherData;
-    // daily: WeeklyWeatherObj;
     hourly: HourlyForecastWeatherObj;
+    //!Nytt
+    daily: dailyWeatherSumsObj;
 }
 interface CurrentWeatherData {
     time: string;
@@ -55,14 +56,17 @@ interface HourlyForecastWeatherObj {
     windspeed_10m: number[];
     rain: number[];
 }
-interface WeeklyWeatherObj {
+//!Nytt
+interface dailyWeatherSumsObj {
     weathercode: number[];
+    temperature_2m_max: number[];
+    temperature_2m_min: number[];
+    time: string[];
 }
 
-const generateWeeklyTemperatureData = (forecast: WeatherObj) => {
+const formatHourlyTemperatureData = (forecast: WeatherObj) => {
     const currentTime = new Date(forecast.current_weather.time);
 
-    
     const tempArr = forecast.hourly.temperature_2m;
     const weatherCodeArr = forecast.hourly.weathercode;
     const windSpeedArr = forecast.hourly.windspeed_10m;
@@ -94,9 +98,14 @@ const generateWeeklyTemperatureData = (forecast: WeatherObj) => {
 const WeeklyOverview = ({ forecast }: Props) => {
     const [selectedDate, setSelectedDate] = useState<number | null>(null);
 
-    const weeklyForecast = generateWeeklyTemperatureData(forecast);
+    const weeklyForecast = formatHourlyTemperatureData(forecast);
 
-    console.log(forecast)
+    console.log(forecast.daily);
+
+    const { temperature_2m_max, temperature_2m_min, weathercode, time } =
+        forecast.daily;
+
+
 
     return (
         <>
@@ -107,33 +116,33 @@ const WeeklyOverview = ({ forecast }: Props) => {
                     <ForecastDescriptors showAdditionalHeadings={false} />
 
                     <ul className="weekly-forecast">
-                        {weeklyForecast.map((day, index) => {
-                            const weatherCode = getMostFrequentNum(
-                                day.dayWeatherCodeArr
-                            );
-                            const icon: IconProp | undefined = determineWeatherIcon(
-                                typeof weatherCode === "number" ? weatherCode : 0
-                            );
+                        {time.map((day, index) => {
+                            const icon: IconProp | undefined =
+                                determineWeatherIcon(weathercode[index]);
                             return (
                                 <li
                                     onClick={() => {
                                         setSelectedDate(index);
                                     }}
                                     //todo? change key
-                                    key={day.dayTempArr.join(",")}
+                                    key={day}
                                     className="forecast-card"
                                 >
                                     <div className="date-cell">
-                                        <h3> {getWeekday(day.date)}</h3>
-                                        <p> {formatDate(day.date)}</p>
+                                        <h3> {getWeekday(day)}</h3>
+                                        <p> {formatDate(day)}</p>
                                     </div>
                                     <div className="weather-cell">
                                         {icon ? (
                                             <FontAwesomeIcon icon={icon} />
                                         ) : null}
                                         <div className="temp-cell">
-                                            <p>{Math.max(...day.dayTempArr)}°</p>
-                                            <p>{Math.min(...day.dayTempArr)}°</p>
+                                            <p>
+                                                {temperature_2m_max[index]}°
+                                            </p>
+                                            <p>
+                                                {temperature_2m_min[index]}°
+                                            </p>
                                         </div>
                                     </div>
                                 </li>
