@@ -48,7 +48,6 @@ const App = () => {
     const [latitude, setLatitude] = useState<number | null>(null);
     const [longitude, setLongitude] = useState<number | null>(null);
 
-    //! Nytt
     const handleSearchResult = (
         location: string,
         latitude: number,
@@ -58,7 +57,6 @@ const App = () => {
         setLongitude(longitude);
         setLocation(location);
     };
-    //! Nytt
 
     const BASE_URL =
         "https://api.open-meteo.com/v1/forecast?current_weather=true&hourly=winddirection_10m,relativehumidity_2m,pressure_msl,visibility,rain,temperature_2m,apparent_temperature,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,rain_sum,showers_sum,snowfall_sum&windspeed_unit=ms&timezone=GMT";

@@ -2,9 +2,14 @@
 //     outline: 1px solid pink;
 // }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     scroll-behavior: smooth;
-    margin: 0;
     background-color: $primary-bg;
     * {
         font-family: $body;
@@ -12,9 +17,15 @@ body {
     }
 }
 
+.root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
 .app-container {
-    min-height: 100vh;
-    max-width: 32.5rem;
+    height: 100%;
+    width: 60%;
     margin: auto;
     display: flex;
     flex-direction: column;
