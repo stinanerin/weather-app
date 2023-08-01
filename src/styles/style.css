@@ -212,7 +212,12 @@ input:active, input:focus, input:active:active, input:active:focus, input:focus:
   height: 4rem;
 }
 
-.info-card {
+.more-info-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+.more-info-wrapper .info-card {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.09) 100%);
   border-radius: 0.5rem;
   box-shadow: rgba(19, 89, 105, 0.197) 1.95px 1.95px 2.6px;

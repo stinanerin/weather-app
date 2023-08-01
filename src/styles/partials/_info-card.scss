@@ -1,4 +1,10 @@
-.info-card {
-    @include card;
-    padding: $padding-primary;
+
+.more-info-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    .info-card {
+        @include card;
+        padding: $padding-primary;
+}
 }

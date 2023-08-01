@@ -18,7 +18,12 @@ interface weatherDay {
 }
 interface WetherObject {
     date: string;
-    uv_index: number;
+    more_info: {
+        // Key is a string
+        // Value is key value pair - data is stirng or number - unit is string
+        [key: string]: { data: number | string; unit?: string };
+    };
+
     dayTempArr: number[];
     dayWeatherCodeArr: number[];
     dayRainArr: number[];
@@ -31,11 +36,11 @@ const DayView = ({ WeatherData }: Props) => {
     // Destructure the weatherData object
     const {
         date,
-        uv_index,
         dayTempArr,
         dayWeatherCodeArr,
         dayRainArr,
         dayWindspeedArr,
+        more_info,
     } = WeatherData;
 
     const Today = new Date();
@@ -59,6 +64,10 @@ const DayView = ({ WeatherData }: Props) => {
         .filter((item): item is weatherDay => item !== null) as weatherDay[];
 
     console.log("dayweatherArr", dayweatherArr);
+
+    const infoKeys = Object.keys(more_info);
+
+    console.log("dayweatherArr", infoKeys);
 
     return (
         <div className="forecast-wrapper">
@@ -110,8 +119,25 @@ const DayView = ({ WeatherData }: Props) => {
                     )}
                 </>
             </ul>
-            <h2>Other info</h2>
-            <InfoCard heading={"UV-index"} data={uv_index} />
+            <div>
+                <h2>Other info</h2>
+                <div className="more-info-wrapper">
+                    {infoKeys.map((key) => (
+                        <InfoCard
+                            key={key}
+                            heading={key}
+                            data={more_info[key].data}
+                            unit={more_info[key].unit}
+                        />
+                    ))}
+                </div>
+
+                {/*todo:
+                 * sunset - sunrise icons
+                 * all headings fixed
+                 * add units for pressure and so on
+                 */}
+            </div>
         </div>
     );
 };
