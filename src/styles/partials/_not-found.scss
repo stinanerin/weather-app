@@ -2,6 +2,20 @@
     background-color: $transparant-1;
     padding: $padding;
     border-radius: $radius-min;
+    text-align: center;
+
+    p, h1 {
+
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        &:not(p) {
+            font-size: 1.2rem;
+
+        }
+        
+    }
+    
     // p {
     //     margin-bottom: 2em;
     // }

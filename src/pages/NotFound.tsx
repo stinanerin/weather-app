@@ -5,8 +5,8 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 const NotFound = () => {
     return (
         <div className="not-found">
-            <h2>Sorry</h2>
-            <p>That page cannot be found</p>
+            <p >Oops!</p>
+            <h1>That page cannot be found</h1>
             <Link to="/" className="button">
                 <FontAwesomeIcon icon={faArrowLeft} aria-hidden="true" />
                  {" "}To home page

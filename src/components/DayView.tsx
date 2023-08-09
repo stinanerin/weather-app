@@ -195,7 +195,7 @@ const DayView = () => {
 
     return (
         <div className="forecast-wrapper">
-            <h2>
+            <h2 className="heading">
                 <span>{getWeekday(date)}</span>
                 <span>{formatDate(date)}</span>
             </h2>
@@ -244,7 +244,7 @@ const DayView = () => {
                 </>
             </ul>
             <div>
-                <h2>Other info</h2>
+                <h2 className="heading">Other info</h2>
                 <div className="more-info-wrapper">
                     {infoKeys.map((key) => {
                         return <InfoCard
