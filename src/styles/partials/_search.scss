@@ -19,8 +19,11 @@ input, input:active, input:focus{
     
     transition: all 400ms ease-in-out;
     &:active, &:focus  {
-        width: 16rem;
+        @media($sm) {
+            width: 16rem;
+        }
     }
+
 }
 
 .search-results {
@@ -34,7 +37,10 @@ input, input:active, input:focus{
 
     overflow: scroll;
     max-height: 13rem;
-    width: 13rem;
+    width: 7rem;
+    @media($sm) {
+        width: 13rem;
+    }
 
     li {
         font-size: 12px;

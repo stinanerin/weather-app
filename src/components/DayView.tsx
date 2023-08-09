@@ -97,7 +97,7 @@ const DayView = ({ WeatherData }: Props) => {
                                     key={index}
                                     className="forecast-card"
                                 >
-                                    <div>
+                                    <div className="left-cell">
                                         {hour}
                                         :00
                                     </div>

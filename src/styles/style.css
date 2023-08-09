@@ -22,7 +22,7 @@ body * {
 
 .app-container {
   height: 100%;
-  width: 60%;
+  width: 90%;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -35,20 +35,31 @@ body * {
   border-radius: 0.5rem;
   box-shadow: rgba(19, 89, 105, 0.197) 1.95px 1.95px 2.6px;
   margin-bottom: 1rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0;
   display: flex;
   justify-content: space-between;
 }
 .forecast-card svg {
   align-self: center;
-  height: 1.5rem;
+  height: 1.3rem;
   min-width: 3rem;
+}
+@media (width >= 768px) {
+  .forecast-card svg {
+    height: 1.5rem;
+    color: pink;
+  }
 }
 .forecast-card .rain-cell {
   min-width: 2rem;
 }
 .forecast-card .wind-cell {
   min-width: 2rem;
+}
+@media (width >= 576px) {
+  .forecast-card {
+    padding: 0.5rem 1rem;
+  }
 }
 
 .forecast-descriptors {
@@ -57,14 +68,21 @@ body * {
   justify-content: end;
   align-items: center;
   text-align: center;
-  gap: 1rem;
-  font-size: 0.75rem;
+  gap: 0.8rem;
+  font-size: 0.6rem;
 }
 .forecast-descriptors .wind-cell {
   padding-right: 0.5rem;
 }
 .forecast-descriptors .rain-cell {
   padding-right: 0.2rem;
+}
+@media (width >= 576px) {
+  .forecast-descriptors {
+    font-size: 0.75rem;
+    font-size: 0.75rem;
+    gap: 1rem;
+  }
 }
 
 p, h3 {
@@ -94,7 +112,7 @@ ul {
   text-align: center;
   padding: 1rem 1.5rem;
   margin-bottom: 1rem;
-  min-width: 15rem;
+  width: min(100%, 15rem);
 }
 
 .weekly-forecast {
@@ -102,15 +120,23 @@ ul {
 }
 .weekly-forecast .forecast-card .date-cell {
   display: flex;
-  padding: 1rem 1.5rem;
+  padding: 0 1rem;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+@media (width >= 576px) {
+  .weekly-forecast .forecast-card .date-cell {
+    font-size: 1.125rem;
+    gap: 1rem;
+  }
 }
 .weekly-forecast .forecast-card .weather-cell {
   display: flex;
-  gap: 1.7rem;
   align-items: center;
   text-align: center;
+  gap: 1rem;
+  font-size: 0.8rem;
 }
 .weekly-forecast .forecast-card .weather-cell .temp-cell {
   display: flex;
@@ -118,6 +144,12 @@ ul {
   justify-content: space-between;
   align-self: stretch;
   min-width: 50px;
+}
+@media (width >= 576px) {
+  .weekly-forecast .forecast-card .weather-cell {
+    font-size: 1rem;
+    gap: 1.7rem;
+  }
 }
 .weekly-forecast .forecast-card:hover {
   cursor: pointer;
@@ -127,13 +159,29 @@ ul {
 .hourly-forecast {
   width: 100%;
 }
+.hourly-forecast .left-cell {
+  padding: 0 1rem;
+  font-size: 0.9rem;
+}
+@media (width >= 576px) {
+  .hourly-forecast .left-cell {
+    font-size: 1.125rem;
+  }
+}
 .hourly-forecast .right-cell {
   display: flex;
   text-align: center;
-  gap: 1.7rem;
+  gap: 1rem;
+  font-size: 0.8rem;
 }
 .hourly-forecast .right-cell div:last-child {
   min-width: 50px;
+}
+@media (width >= 576px) {
+  .hourly-forecast .right-cell {
+    gap: 1.7rem;
+    font-size: 1rem;
+  }
 }
 
 input, input:active, input:focus {
@@ -162,8 +210,10 @@ input::placeholder, input:active::placeholder, input:focus::placeholder {
   font-family: "Poppins";
   color: hsl(0deg, 0%, 100%);
 }
-input:active, input:focus, input:active:active, input:active:focus, input:focus:active, input:focus:focus {
-  width: 16rem;
+@media (width >= 576px) {
+  input:active, input:focus, input:active:active, input:active:focus, input:focus:active, input:focus:focus {
+    width: 16rem;
+  }
 }
 
 .search-results {
@@ -177,7 +227,12 @@ input:active, input:focus, input:active:active, input:active:focus, input:focus:
   right: 1.5rem;
   overflow: scroll;
   max-height: 13rem;
-  width: 13rem;
+  width: 7rem;
+}
+@media (width >= 576px) {
+  .search-results {
+    width: 13rem;
+  }
 }
 .search-results li {
   font-size: 12px;
@@ -232,4 +287,10 @@ input:active, input:focus, input:active:active, input:active:focus, input:focus:
   border-radius: 0.5rem;
   box-shadow: rgba(19, 89, 105, 0.197) 1.95px 1.95px 2.6px;
   padding: 1rem 1.5rem;
+  font-size: 0.8rem;
+}
+@media (width >= 576px) {
+  .more-info-wrapper .info-card {
+    font-size: 1.125rem;
+  }
 }/*# sourceMappingURL=style.css.map */

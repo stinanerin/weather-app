@@ -11,5 +11,5 @@
     text-align: center;
     padding: $padding-primary;
     margin-bottom: 1rem;
-    min-width: 15rem;
+    width: min(100%, 15rem);
 }
