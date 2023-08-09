@@ -29,6 +29,16 @@ body * {
   justify-content: center;
   align-items: center;
 }
+@media (width >= 768px) {
+  .app-container {
+    width: 80%;
+  }
+}
+@media (width >= 1200px) {
+  .app-container {
+    width: 60%;
+  }
+}
 
 .forecast-card {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.09) 100%);
