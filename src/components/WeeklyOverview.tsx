@@ -1,7 +1,9 @@
-import { useState } from "react";
+// import { useState } from "react";
+
+import { Link } from "react-router-dom";
 
 import ForecastDescriptors from "./ForecastDescriptors";
-import DayView from "./DayView";
+// import DayView from "./DayView";
 
 import { getWeekday, formatDate, calculateMean } from "../utility/helper";
 
@@ -90,7 +92,6 @@ const formatHourlyTemperatureData = (forecast: WeatherObj) => {
 
     const weekTempArr = [];
 
-    
     for (let i = 0; i < rain.length; i += 24) {
         const dayTempArr = temperature_2m.slice(i, i + 24);
         const dayWeatherCodeArr = weathercode.slice(i, i + 24);
@@ -122,8 +123,12 @@ const formatHourlyTemperatureData = (forecast: WeatherObj) => {
                     unit: forecast.hourly_units.relativehumidity_2m,
                 },
                 // toString() for typescript
-                sunrise: { data: forecast.daily.sunrise[i / 24].toString().slice(11) },
-                sunset: { data: forecast.daily.sunset[i / 24].toString().slice(11) },
+                sunrise: {
+                    data: forecast.daily.sunrise[i / 24].toString().slice(11),
+                },
+                sunset: {
+                    data: forecast.daily.sunset[i / 24].toString().slice(11),
+                },
             },
             dayTempArr,
             dayWeatherCodeArr,
@@ -135,7 +140,7 @@ const formatHourlyTemperatureData = (forecast: WeatherObj) => {
 };
 
 const WeeklyOverview = ({ forecast }: Props) => {
-    const [selectedDate, setSelectedDate] = useState<number | null>(null);
+    // const [selectedDate, setSelectedDate] = useState<number | null>(null);
 
     const weeklyForecast = formatHourlyTemperatureData(forecast);
 
@@ -151,47 +156,46 @@ const WeeklyOverview = ({ forecast }: Props) => {
 
     return (
         <>
-            {selectedDate !== null ? (
-                <DayView WeatherData={weeklyForecast[selectedDate]} />
-            ) : (
-                <>
-                    <ForecastDescriptors showAdditionalHeadings={false} />
+            <ForecastDescriptors showAdditionalHeadings={false} />
 
-                    <ul className="weekly-forecast">
-                        {time.map((day, index) => {
-                            const icon: IconProp | undefined =
-                                determineWeatherIcon(weathercode[index]);
-                            return (
-                                <li
-                                    onClick={() => {
-                                        setSelectedDate(index);
-                                    }}
-                                    //todo? change key
-                                    key={day}
-                                    className="forecast-card"
-                                >
-                                    <div className="date-cell">
-                                        <h3> {getWeekday(day)}</h3>
-                                        <p> {formatDate(day)}</p>
+            <ul className="weekly-forecast">
+                {time.map((day, index) => {
+                    const icon: IconProp | undefined = determineWeatherIcon(
+                        weathercode[index]
+                    );
+                    return (
+                        <li
+                            // onClick={() => {
+                            //     setSelectedDate(index);
+                            // }}
+                            //todo? change key
+                            key={day}
+                            className="forecast-card"
+                        >
+                            <Link to={`/day/${index}`}>
+                                {" "}
+                                {/* Link to day view */}
+                                <div className="date-cell">
+                                    <h3> {getWeekday(day)}</h3>
+                                    <p> {formatDate(day)}</p>
+                                </div>
+                                <div className="weather-cell">
+                                    <div className="rain-cell">
+                                        {rain_sum[index]}
                                     </div>
-                                    <div className="weather-cell">
-                                        <div className="rain-cell">
-                                            {rain_sum[index]}
-                                        </div>
-                                        {icon ? (
-                                            <FontAwesomeIcon icon={icon} />
-                                        ) : null}
-                                        <div className="temp-cell">
-                                            <p>{temperature_2m_max[index]}°</p>
-                                            <p>{temperature_2m_min[index]}°</p>
-                                        </div>
+                                    {icon ? (
+                                        <FontAwesomeIcon icon={icon} />
+                                    ) : null}
+                                    <div className="temp-cell">
+                                        <p>{temperature_2m_max[index]}°</p>
+                                        <p>{temperature_2m_min[index]}°</p>
                                     </div>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </>
-            )}
+                                </div>
+                            </Link>
+                        </li>
+                    );
+                })}
+            </ul>
         </>
     );
 };

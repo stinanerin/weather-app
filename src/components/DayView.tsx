@@ -6,6 +6,9 @@ import InfoCard from "./InfoCard";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+// import { useParams } from "react-router-dom";
+
+
 interface Props {
     WeatherData: WetherObject;
 }
@@ -31,6 +34,9 @@ interface WetherObject {
 }
 
 const DayView = ({ WeatherData }: Props) => {
+
+    // const { dayIndex } = useParams(); // Get day index from URL parameter
+
     console.log("weatherData", WeatherData);
 
     // Destructure the weatherData object
