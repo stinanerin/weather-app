@@ -8,6 +8,7 @@ import { determineWeatherIcon } from "../utility/weatherIcons";
 
 import ForecastDescriptors from "./ForecastDescriptors";
 import InfoCard from "./InfoCard";
+import LoadingScreen from "./LoadingScreen";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -25,11 +26,7 @@ interface weatherDay {
     weather_code: number;
 }
 
-
 //todo! if weatherData is null amke an api call? in case user direclty navigates to a day/:idnex page
-
-
-
 
 interface WeatherObj {
     // typeannotation...
@@ -146,6 +143,10 @@ const DayView = () => {
 
     console.log("weatherData", weatherData);
 
+    if (!weatherData) {
+        return <LoadingScreen />;
+    }
+
     // Destructure the weatherData object
     const {
         date,
@@ -181,7 +182,7 @@ const DayView = () => {
     const infoKeys = Object.keys(more_info);
 
     console.log("dayweatherArr", infoKeys);
-
+    
     return (
         <div className="forecast-wrapper">
             <h2>
