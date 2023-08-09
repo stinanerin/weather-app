@@ -93,11 +93,33 @@ body {
     }
 }
 
+.button {
+    padding: $padding-primary;
+    font-size: 0.9rem;
+    border-radius: $radius-max;
+    background-color: $primary-accent;
+    display: block;
+    text-align: center;
+
+    font-weight: 500;
+
+    
+    &:hover {
+        background-color: $primary-bg;
+        cursor: pointer;
+    }
+
+}
+
+.heading {
+    margin-bottom: 1rem;
+}
 
 // RESET
 
-p, h3{
+p, h1, h2, h3{
     margin: 0;
+    // margin-bottom: 1em;
 }
 
 li {

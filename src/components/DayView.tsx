@@ -15,9 +15,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useParams } from "react-router-dom";
 import { useWeatherContext } from "../utility/useWeatherContext";
 
-// interface Props {
-//     WeatherData: WetherObject;
-// }
 interface weatherDay {
     hour: string | number;
     temp: number;
@@ -27,7 +24,6 @@ interface weatherDay {
 }
 
 //todo! if weatherData is null amke an api call? in case user direclty navigates to a day/:idnex page
-
 interface WeatherObj {
     // typeannotation...
     current_weather: CurrentWeatherData;
@@ -53,7 +49,6 @@ interface HourlyForecastWeatherObj {
     relativehumidity_2m: number[];
     visibility: number[];
 }
-//!Nytt
 interface DailyWeatherSumsObj {
     weathercode: number[];
     temperature_2m_max: number[];
@@ -65,7 +60,21 @@ interface DailyWeatherSumsObj {
     time: string[];
 }
 
+//!Nytt
+
+type MoreInfo = {
+    uv: { data: number; unit: string };
+    pressure: { data: number; unit: string };
+    visibility: { data: number; unit: string };
+    humidity: { data: number; unit: string };
+    sunrise: { data: string; unit: string };
+    sunset: { data: string; unit: string };
+};
+
 const DayView = () => {
+    const { weatherData } = useWeatherContext();
+
+    //todo: move function
     const formatHourlyTemperatureData = (forecast: WeatherObj) => {
         const currentTime = new Date(forecast.current_weather.time);
 
@@ -98,6 +107,7 @@ const DayView = () => {
                 more_info: {
                     uv: {
                         data: forecast.daily.uv_index_max[i / 24],
+                        unit: "",
                     },
                     pressure: {
                         data: Math.round(calculateMean(dayPressureArr)),
@@ -116,11 +126,13 @@ const DayView = () => {
                         data: forecast.daily.sunrise[i / 24]
                             .toString()
                             .slice(11),
+                        unit: "",
                     },
                     sunset: {
                         data: forecast.daily.sunset[i / 24]
                             .toString()
                             .slice(11),
+                        unit: "",
                     },
                 },
                 dayTempArr,
@@ -132,8 +144,6 @@ const DayView = () => {
         return weekTempArr;
     };
 
-    const { weatherData } = useWeatherContext();
-
     const weeklyForecast = weatherData?.hourly
         ? formatHourlyTemperatureData(weatherData)
         : [];
@@ -141,7 +151,7 @@ const DayView = () => {
     const { dayIndex } = useParams<{ dayIndex: string }>();
     const parsedDayIndex = parseInt(dayIndex, 10);
 
-    console.log("weatherData", weatherData);
+    console.log("weeklyForecast", weeklyForecast);
 
     if (!weatherData) {
         return <LoadingScreen />;
@@ -173,7 +183,7 @@ const DayView = () => {
                       wind_speed: Math.round(dayWindspeedArr[index]),
                       weather_code: dayWeatherCodeArr[index],
                   };
-            // Think of easy way as to not iterate through array twice
+            // Think of easy way that you actually understand as to not iterate through array twice
         })
         .filter((item): item is weatherDay => item !== null) as weatherDay[];
 
@@ -181,11 +191,11 @@ const DayView = () => {
 
     const infoKeys = Object.keys(more_info);
 
-    console.log("dayweatherArr", infoKeys);
-    
+    console.log("infoKeys", infoKeys);
+
     return (
         <div className="forecast-wrapper">
-            <h2>
+            <h2 className="heading">
                 <span>{getWeekday(date)}</span>
                 <span>{formatDate(date)}</span>
             </h2>
@@ -234,16 +244,16 @@ const DayView = () => {
                 </>
             </ul>
             <div>
-                <h2>Other info</h2>
+                <h2 className="heading">Other info</h2>
                 <div className="more-info-wrapper">
-                    {infoKeys.map((key) => (
-                        <InfoCard
+                    {infoKeys.map((key) => {
+                        return <InfoCard
                             key={key}
                             heading={key}
-                            data={more_info[key].data}
-                            unit={more_info[key].unit}
-                        />
-                    ))}
+                            data={more_info[key as keyof MoreInfo].data}
+                            unit={more_info[key as keyof MoreInfo].unit}
+                        />;
+                    })}
                 </div>
 
                 {/*todo:

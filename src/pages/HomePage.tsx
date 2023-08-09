@@ -14,7 +14,7 @@ const HomePage = () => {
     return (
         <>
             <div className="current-temp-overview">
-                <h2>
+                <h2 className="heading">
                     {/* todo is it in the weather arr iobject already?{location} */}
                     {weatherData.location}
                 </h2>
