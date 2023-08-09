@@ -2,30 +2,39 @@
 
 .weekly-forecast {
     width: 100%;
-
     .forecast-card {
+        // background-color: blue;
 
         .date-cell {
             display: flex;
-            padding: $padding-primary;
+            padding: $padding-tertiary;
             align-items: center;
-            gap: 1rem;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            @media($sm) {
+                // background-color: rgb(82, 8, 20);
+                font-size: 1.125rem;
+                gap: 1rem;
+            }
         }
         .weather-cell  {
             display: flex;
-            gap: 1.7rem;
             align-items:center;
             text-align: center;
+            gap: 1rem;
+            font-size: 0.8rem;
 
             .temp-cell {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
                 align-self: stretch;
-
                 min-width: 50px;
             }
-            
+            @media($sm) {
+                font-size: 1rem;
+                gap: 1.7rem;
+            }
         }
         &:hover {
             cursor: pointer;

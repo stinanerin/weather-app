@@ -23,12 +23,22 @@ $radius-max: 50px;
 // Padding
 $padding-primary: 1rem 1.5rem;
 $padding-secondary: 0.5rem 1rem;
+$padding-tertiary: 0 1rem;
+$padding-quaternary: 0.5rem 0;
 
 // Gradient
-
 $gradient-1: linear-gradient(180deg, $transparant-1 0%, $transparant-2 100%);
 
 
-// Color theme
 
+// Color theme
 $text-clr: $p-white;
+
+
+
+// Breakpoints - mobile first
+$xs: "width >= 360px";
+$sm: "width >= 576px";
+$md: "width >= 768px";
+$lg: "width >= 992px";
+$xl: "width >= 1200px";

@@ -25,7 +25,7 @@ body {
 
 .app-container {
     height: 100%;
-    width: 60%;
+    width: 90%;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -36,19 +36,28 @@ body {
 .forecast-card {
     @include card;
     margin-bottom: 1rem;
-    padding: $padding-secondary;
+    padding: $padding-quaternary;
     display: flex;
     justify-content: space-between;
     svg {
         align-self: center;
-        height: 1.5rem;
+        height: 1.3rem;
         min-width: 3rem;
+        @media($md) {
+            height: 1.5rem;
+
+            color: pink;
+        }
     }
     .rain-cell {
         min-width: 2rem;
     }
     .wind-cell {
         min-width: 2rem;
+    }
+    @media($sm) {
+        padding: $padding-secondary;
+        // background-color: pink;
     }
 }
 
@@ -58,14 +67,22 @@ body {
     justify-content: end;
     align-items: center;
     text-align: center;
-    gap: 1rem;
+
+    gap: 0.8rem;
+    font-size: 0.6rem;
+
     
-    font-size: 0.75rem;
     .wind-cell {
         padding-right: 0.5rem;
     }
     .rain-cell {
         padding-right: 0.2rem;
+        
+    }
+    @media($sm) {
+        font-size: 0.75rem;
+        font-size: 0.75rem;
+        gap: 1rem;
 
     }
 }
