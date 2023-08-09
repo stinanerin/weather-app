@@ -170,9 +170,11 @@ const WeeklyOverview = ({ forecast }: Props) => {
                             // }}
                             //todo? change key
                             key={day}
-                            className="forecast-card"
                         >
-                            <Link to={`/day/${index}`}>
+                            <Link
+                                to={`/day/${index}`}
+                                className="forecast-card"
+                            >
                                 {" "}
                                 {/* Link to day view */}
                                 <div className="date-cell">

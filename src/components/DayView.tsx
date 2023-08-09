@@ -1,4 +1,9 @@
-import { getWeekday, formatDate, datesAreEqual } from "../utility/helper";
+import {
+    getWeekday,
+    formatDate,
+    datesAreEqual,
+    calculateMean,
+} from "../utility/helper";
 import { determineWeatherIcon } from "../utility/weatherIcons";
 
 import ForecastDescriptors from "./ForecastDescriptors";
@@ -6,12 +11,12 @@ import InfoCard from "./InfoCard";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useWeatherContext } from "../utility/useWeatherContext";
 
-
-interface Props {
-    WeatherData: WetherObject;
-}
+// interface Props {
+//     WeatherData: WetherObject;
+// }
 interface weatherDay {
     hour: string | number;
     temp: number;
@@ -19,25 +24,127 @@ interface weatherDay {
     wind_speed: number;
     weather_code: number;
 }
-interface WetherObject {
-    date: string;
-    more_info: {
-        // Key is a string
-        // Value is key value pair - data is stirng or number - unit is string
-        [key: string]: { data: number | string; unit?: string };
-    };
 
-    dayTempArr: number[];
-    dayWeatherCodeArr: number[];
-    dayRainArr: number[];
-    dayWindspeedArr: number[];
+
+//todo! if weatherData is null amke an api call? in case user direclty navigates to a day/:idnex page
+
+
+
+
+interface WeatherObj {
+    // typeannotation...
+    current_weather: CurrentWeatherData;
+    hourly: HourlyForecastWeatherObj;
+    //!Nytt
+    daily: DailyWeatherSumsObj;
+    hourly_units: {
+        [key: string]: string;
+    };
 }
 
-const DayView = ({ WeatherData }: Props) => {
+interface CurrentWeatherData {
+    time: string;
+    temperature: number;
+}
 
-    // const { dayIndex } = useParams(); // Get day index from URL parameter
+interface HourlyForecastWeatherObj {
+    temperature_2m: number[];
+    weathercode: number[];
+    windspeed_10m: number[];
+    rain: number[];
+    pressure_msl: number[];
+    relativehumidity_2m: number[];
+    visibility: number[];
+}
+//!Nytt
+interface DailyWeatherSumsObj {
+    weathercode: number[];
+    temperature_2m_max: number[];
+    temperature_2m_min: number[];
+    rain_sum: number[];
+    uv_index_max: number[];
+    sunrise: number[];
+    sunset: number[];
+    time: string[];
+}
 
-    console.log("weatherData", WeatherData);
+const DayView = () => {
+    const formatHourlyTemperatureData = (forecast: WeatherObj) => {
+        const currentTime = new Date(forecast.current_weather.time);
+
+        const {
+            temperature_2m,
+            weathercode,
+            windspeed_10m,
+            rain,
+            pressure_msl,
+            visibility,
+            relativehumidity_2m,
+        } = forecast.hourly;
+
+        const weekTempArr = [];
+
+        for (let i = 0; i < rain.length; i += 24) {
+            const dayTempArr = temperature_2m.slice(i, i + 24);
+            const dayWeatherCodeArr = weathercode.slice(i, i + 24);
+            const dayWindspeedArr = windspeed_10m.slice(i, i + 24);
+            const dayRainArr = rain.slice(i, i + 24);
+            const dayPressureArr = pressure_msl.slice(i, i + 24);
+            const dayVisibilityArr = visibility.slice(i, i + 24);
+            const dayHumidityArr = relativehumidity_2m.slice(i, i + 24);
+
+            const currentDate = new Date(currentTime);
+            currentDate.setDate(currentDate.getDate() + i / 24);
+
+            weekTempArr.push({
+                date: currentDate.toISOString(),
+                more_info: {
+                    uv: {
+                        data: forecast.daily.uv_index_max[i / 24],
+                    },
+                    pressure: {
+                        data: Math.round(calculateMean(dayPressureArr)),
+                        unit: forecast.hourly_units.pressure_msl,
+                    },
+                    visibility: {
+                        data: Math.round(calculateMean(dayVisibilityArr)),
+                        unit: forecast.hourly_units.visibility,
+                    },
+                    humidity: {
+                        data: Math.round(calculateMean(dayHumidityArr)),
+                        unit: forecast.hourly_units.relativehumidity_2m,
+                    },
+                    // toString() for typescript
+                    sunrise: {
+                        data: forecast.daily.sunrise[i / 24]
+                            .toString()
+                            .slice(11),
+                    },
+                    sunset: {
+                        data: forecast.daily.sunset[i / 24]
+                            .toString()
+                            .slice(11),
+                    },
+                },
+                dayTempArr,
+                dayWeatherCodeArr,
+                dayWindspeedArr,
+                dayRainArr,
+            });
+        }
+        return weekTempArr;
+    };
+
+    const { weatherData } = useWeatherContext();
+
+    const weeklyForecast = weatherData?.hourly
+        ? formatHourlyTemperatureData(weatherData)
+        : [];
+    // Gets day index from URL parameter
+    const { dayIndex } = useParams<{ dayIndex: string }>();
+    const parsedDayIndex = parseInt(dayIndex, 10);
+
+    console.log("weatherData", weatherData);
 
     // Destructure the weatherData object
     const {
@@ -47,7 +154,7 @@ const DayView = ({ WeatherData }: Props) => {
         dayRainArr,
         dayWindspeedArr,
         more_info,
-    } = WeatherData;
+    } = weeklyForecast[parsedDayIndex];
 
     const Today = new Date();
 

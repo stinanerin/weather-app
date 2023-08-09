@@ -1,52 +1,22 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router } from "react-router-dom";
 
-import { formatDate, getWeekday } from "./utility/helper";
-import { getLocation, fetchData } from "./utility/api";
+import { getLocation } from "./utility/helper";
+import { fetchData } from "./utility/api";
 
 import AppRouter from "./utility/AppRouter";
 
-import WeeklyOverview from "./components/WeeklyOverview";
+// import WeeklyOverview from "./components/WeeklyOverview";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 
-
-interface CurrentWeatherData {
-    time: string;
-    temperature: number;
-}
-
-interface WeatherData {
-    current_weather: CurrentWeatherData;
-    hourly: {
-        temperature_2m: number[];
-        weathercode: number[];
-        windspeed_10m: number[];
-        rain: number[];
-        pressure_msl: number[];
-        relativehumidity_2m: number[];
-        visibility: number[];
-    };
-    daily: {
-        // [key: string]:  number[];
-        weathercode: number[];
-        temperature_2m_max: number[];
-        temperature_2m_min: number[];
-        rain_sum: number[];
-        uv_index_max: number[];
-        sunrise: number[];
-        sunset: number[];
-        time: string[];
-    };
-    hourly_units: {
-        [key: string]: string;
-    };
-}
+import { useWeatherContext } from "./utility/useWeatherContext";
 
 const App = () => {
-    const [isLoading, setIsLoading] = useState(true);
 
-    const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+    const { weatherData, setWeatherData } = useWeatherContext();
+    // const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+
     const [location, setLocation] = useState<string | null>(null);
 
     const [latitude, setLatitude] = useState<number | null>(null);
@@ -70,10 +40,12 @@ const App = () => {
             try {
                 const success = async (pos: GeolocationPosition) => {
                     const crd = pos.coords;
+
+                    const city = await getLocation(crd.latitude, crd.longitude);
                     // Update the latitude and longitude state variables
+                    setLocation(city);
                     setLatitude(crd.latitude);
                     setLongitude(crd.longitude);
-                    getLocationData(crd.latitude, crd.longitude);
                 };
 
                 const error = (err: GeolocationPositionError) => {
@@ -90,20 +62,14 @@ const App = () => {
         fetchCurrentLocationWeatherData();
     }, []);
 
-    const getLocationData = async (latitude: number, longitude: number) => {
-        try {
-            if (latitude !== null && longitude !== null) {
-                const locationData = await getLocation(longitude, latitude);
-                setLocation(locationData.city);
-            }
-        } catch (error) {
-            console.warn("Error while fetching location data", error);
-        }
-    };
+   
+
+
+
+
     useEffect(() => {
         // When latitude or longitude changes, fetch weather data
         if (latitude !== null && longitude !== null) {
-            setIsLoading(true);
 
             const getWeatherData = async () => {
                 try {
@@ -113,49 +79,29 @@ const App = () => {
                     if (res === undefined || res.status !== 200) {
                         throw new Error("Failed to fetch weather data");
                     }
-                    setWeatherData(res.data);
-                    console.log("weather data", res.data);
+                    const weatherDataWithLocation = {
+                        ...res.data,
+                        location: location,
+                    };
+                    setWeatherData(weatherDataWithLocation);
                 } catch (error) {
                     console.warn("Error while fetching weather data", error);
-                } finally {
-                    setIsLoading(false);
-                }
+                } 
             };
 
             getWeatherData();
         }
+        // -->  ignore the missing dependency warning
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [latitude, longitude]);
 
     return (
         <Router>
             <Header onSearchResultClick={handleSearchResult} />
-
-            <AppRouter />
-
-                <div className="app-container">
-                    {isLoading ? (
-                        <p>Loading...</p>
-                    ) : weatherData && location ? (
-                        <>
-                            {/* {console.log(location)} */}
-                            <div className="current-temp-overview">
-                                <h2>
-                                    {location}
-                                    {/* {location.country} */}
-                                </h2>
-                                <p>
-                                    {getWeekday(weatherData.current_weather.time)}{" "}
-                                    {formatDate(weatherData.current_weather.time)}
-                                </p>
-                                <p>{weatherData.current_weather.temperature}°</p>
-                            </div>
-                            <WeeklyOverview forecast={weatherData} />
-                        </>
-                    ) : (
-                        <p>No data available...</p>
-                    )}
-                </div>
-                <Footer />
+            <div className="app-container">
+                <AppRouter />
+            </div>
+            <Footer />
         </Router>
     );
 };
