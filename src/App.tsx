@@ -13,8 +13,7 @@ import Header from "./components/Header";
 import { useWeatherContext } from "./utility/useWeatherContext";
 
 const App = () => {
-
-    const { weatherData, setWeatherData } = useWeatherContext();
+    const {setWeatherData } = useWeatherContext();
     // const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
 
     const [location, setLocation] = useState<string | null>(null);
@@ -62,15 +61,9 @@ const App = () => {
         fetchCurrentLocationWeatherData();
     }, []);
 
-   
-
-
-
-
     useEffect(() => {
         // When latitude or longitude changes, fetch weather data
         if (latitude !== null && longitude !== null) {
-
             const getWeatherData = async () => {
                 try {
                     const url = `${BASE_URL}&latitude=${latitude}&longitude=${longitude}`;
@@ -86,7 +79,7 @@ const App = () => {
                     setWeatherData(weatherDataWithLocation);
                 } catch (error) {
                     console.warn("Error while fetching weather data", error);
-                } 
+                }
             };
 
             getWeatherData();
