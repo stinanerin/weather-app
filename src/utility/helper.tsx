@@ -1,3 +1,6 @@
+
+import { getLocationData } from "./api";
+
 export const formatDate = (date: string) => {
     const dateObj = new Date(date);
     const day = dateObj.getDate();
@@ -62,3 +65,14 @@ export const toUpperCaseStr = (str: string) =>
             return word[0].toUpperCase() + word.slice(1);
         })
         .join(" ");
+
+export const getLocation = async (latitude: number, longitude: number) => {
+    try {
+        if (latitude !== null && longitude !== null) {
+            const locationData = await getLocationData(longitude, latitude);
+            return locationData.city;
+        }
+    } catch (error) {
+        console.warn("Error while fetching location data", error);
+    }
+};

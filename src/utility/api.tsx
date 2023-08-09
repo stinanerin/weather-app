@@ -11,7 +11,7 @@ export const fetchData = async (url: string) => {
     }
 };
 
-export const getLocation = async (longitude: number, latitude: number) => {
+export const getLocationData = async (longitude: number, latitude: number) => {
     try {
         const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}`;
         const res = await fetchData(url);
