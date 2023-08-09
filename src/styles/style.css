@@ -95,7 +95,24 @@ body * {
   }
 }
 
-p, h3 {
+.button {
+  padding: 1rem 1.5rem;
+  font-size: 0.9rem;
+  border-radius: 50px;
+  background-color: rgb(2, 127, 155);
+  display: block;
+  text-align: center;
+}
+.button:hover {
+  background-color: rgb(32, 162, 190);
+  cursor: pointer;
+}
+
+.heading {
+  margin-bottom: 1rem;
+}
+
+p, h1, h2, h3 {
   margin: 0;
 }
 
@@ -124,7 +141,7 @@ a {
   border-radius: 0.5rem;
   box-shadow: rgba(19, 89, 105, 0.197) 1.95px 1.95px 2.6px;
   text-align: center;
-  padding: 1rem 1.5rem;
+  padding: 2rem;
   margin-bottom: 1rem;
   width: min(100%, 15rem);
 }
@@ -307,4 +324,10 @@ input::placeholder, input:active::placeholder, input:focus::placeholder {
   .more-info-wrapper .info-card {
     font-size: 1.125rem;
   }
+}
+
+.not-found {
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 2rem;
+  border-radius: 0.5rem;
 }/*# sourceMappingURL=style.css.map */

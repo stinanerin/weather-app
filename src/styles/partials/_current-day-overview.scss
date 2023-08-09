@@ -9,7 +9,7 @@
 .current-temp-overview {
     @include card;
     text-align: center;
-    padding: $padding-primary;
+    padding: $padding;
     margin-bottom: 1rem;
     width: min(100%, 15rem);
 }

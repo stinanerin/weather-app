@@ -1,12 +1,17 @@
 import { Route, Switch } from "react-router-dom";
 import DayView from "../components/DayView";
 import HomePage from "../pages/HomePage";
+import NotFound from "../pages/NotFound";
+
+
+
 
 const AppRouter = () => {
     return (
         <Switch>
             <Route exact path="/" component={HomePage} />
-            <Route path="/day/:dayIndex" component={DayView} />
+            <Route exact path="/day/:dayIndex" component={DayView} />
+            <Route path="/*" component={NotFound}/>
         </Switch>
     );
 };
