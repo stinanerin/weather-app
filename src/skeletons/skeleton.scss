@@ -1,0 +1,117 @@
+
+@import "../styles/partials/variables.scss";
+@import "../styles/partials/mixins.scss";
+
+
+/* basic styles */
+.skeleton {
+  @include card;
+  // background: #ddd;
+  overflow: hidden;
+  position: relative;
+}
+.skeleton-text {
+  width: 70%;
+  height: 12px;
+  border-radius: $radius-max;
+  @media($md) {
+    height: 1rem; 
+  }
+
+}
+.skeleton-title {
+  width: 30%;
+  height: 16px;
+  @media($md) {
+    height: 21px; 
+  }
+
+}
+.skeleton-card {
+  // width: 100%;
+  display: flex;
+  gap: 20%;
+  align-items: center;
+
+  padding: $padding-secondary;
+
+  height: 36px; 
+  @media($md) {
+    height: 50px; 
+  }
+  border-radius: $radius-min;
+  margin: 0;
+  &:not(:last-child) {
+
+    margin-bottom: 1rem;
+  }
+}
+
+
+
+.skeleton-current-weather-display {
+  @include card;
+  text-align: center;
+  padding: $padding;
+  margin-bottom: 1rem;
+  width: min(100%, 15rem);
+  height: 100px;
+  margin: 0 auto 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.skeleton-overview {
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  & > :first-child {
+    align-self: flex-end; 
+    margin-bottom: 1rem;
+  }
+}
+
+
+
+/* themes */
+// .skeleton-wrapper.skeleton-light {
+//   // background: #f2f2f2;
+// }
+.skeleton-wrapper.skeleton-dark {
+  background: #444;
+  & .skeleton {
+
+    background: #777;
+  }
+}
+
+
+.skeleton {
+  
+  
+  &.shimmer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0,
+      rgba(255, 255, 255, 0.2) 20%,
+      rgba(255, 255, 255, 0.26) 60%,
+      rgba(255, 255, 255, 0)
+    );
+    animation: shimmer 4s infinite;
+  }
+
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+}
