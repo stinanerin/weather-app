@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { HashRouter as Router } from 'react-router-dom';
 
 import { getLocation } from "./utility/helper";
 import { fetchData } from "./utility/api";
