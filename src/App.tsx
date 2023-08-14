@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
-import { HashRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from "react-router-dom";
 
 import { getLocation } from "./utility/helper";
 import { fetchData } from "./utility/api";
 
 import AppRouter from "./utility/AppRouter";
 
-// import WeeklyOverview from "./components/WeeklyOverview";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 
 import { useWeatherContext } from "./utility/useWeatherContext";
 
 const App = () => {
-    const {setWeatherData } = useWeatherContext();
-    // const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+    const { setWeatherData } = useWeatherContext();
 
     const [location, setLocation] = useState<string | null>(null);
 
@@ -34,6 +32,8 @@ const App = () => {
     const BASE_URL =
         "https://api.open-meteo.com/v1/forecast?current_weather=true&hourly=winddirection_10m,relativehumidity_2m,pressure_msl,visibility,rain,temperature_2m,apparent_temperature,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max,rain_sum,showers_sum,snowfall_sum&windspeed_unit=ms&timezone=GMT";
 
+    
+
     useEffect(() => {
         const fetchCurrentLocationWeatherData = async () => {
             try {
@@ -46,13 +46,16 @@ const App = () => {
                     setLatitude(crd.latitude);
                     setLongitude(crd.longitude);
                 };
-
-                const error = (err: GeolocationPositionError) => {
-                    //todo - if user does not allow location to be determined
+                const errorCallback = (err: GeolocationPositionError) => {
                     console.warn(`ERROR(${err.code}): ${err.message}`);
+                    // As using hashrouter instead of browserrouter due to netlify issue
+                    // Need to us window.locaiton.has instead of useHistory() - history.push(/:route)
+                    window.location.hash = "/location-not-granted"; // Use window.location.hash to navigate
                 };
-
-                navigator.geolocation.getCurrentPosition(success, error);
+                navigator.geolocation.getCurrentPosition(
+                    success,
+                    errorCallback
+                );
             } catch (error) {
                 console.warn("Error while fetching weather data", error);
             }
@@ -93,6 +96,7 @@ const App = () => {
             <Header onSearchResultClick={handleSearchResult} />
             <div className="app-container">
                 <AppRouter />
+
             </div>
             <Footer />
         </Router>
