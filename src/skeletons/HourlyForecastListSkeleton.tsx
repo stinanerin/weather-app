@@ -6,6 +6,7 @@ interface Props {
 }
 
 const HourlyForecastListSkeleton = ({ limit } : Props) => {
+
     return (
         <div className="skeleton-hourly-overview">
             <div>
@@ -19,7 +20,8 @@ const HourlyForecastListSkeleton = ({ limit } : Props) => {
                     <SkeletonElement type={"title"} />
                     <SkeletonElement type={"text"} />
                 </SkeletonElement>
-            ))}
+            ))
+            }
         </div>
     );
 };

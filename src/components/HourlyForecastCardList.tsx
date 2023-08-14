@@ -76,6 +76,8 @@ type MoreInfo = {
 const DayView = () => {
     const { weatherData } = useWeatherContext();
 
+    // todo, maybe move this to when allt eh data first is fetched and then add it ti the useWeather cotnext
+
     //todo: move function
     const formatHourlyTemperatureData = (forecast: WeatherObj) => {
         const currentTime = new Date(forecast.current_weather.time);
@@ -153,19 +155,24 @@ const DayView = () => {
     const { dayIndex } = useParams<{ dayIndex: string }>();
     const parsedDayIndex = parseInt(dayIndex, 10);
 
+    console.log("parsedDayIndex", parsedDayIndex)
+
     console.log("weeklyForecast", weeklyForecast);
-    
-    
+        
+
     const Today = new Date();
     const currentTime = +Today.getHours();
-    
-    console.log("currentTime", currentTime);
 
+        
     if (!weatherData) {
-        // If !weatherData - generete skeleton loading screens X-times remaining hours of the currently rendered day
-        return <HourlyForecastListSkeleton  limit={currentTime}/>;
-    }
+        // If !weatherData - generete skeleton loading screens 
+        // if the currently rendered date is today, limit amount of skeletons to X-times remaining hours of the day
+        // Ohterwise, just do 24
+        const skeletonLimit = parsedDayIndex === 0 ? (24 - currentTime) : 24;
 
+        return <HourlyForecastListSkeleton  limit={skeletonLimit}/>;
+    }
+    
     // Destructure the weatherData object
     const {
         date,
@@ -175,8 +182,7 @@ const DayView = () => {
         dayWindspeedArr,
         more_info,
     } = weeklyForecast[parsedDayIndex];
-
-
+    
     const todayisBeingRendered = datesAreEqual(new Date(date), Today);
 
     const dayweatherArr = dayTempArr
