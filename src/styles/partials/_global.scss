@@ -39,8 +39,9 @@ body {
     }
 }
 
-.text-center {
-    text-align: center;
+.elem-center {
+    display: grid;
+    place-items: center;
 }
 
 .weather-heading {
