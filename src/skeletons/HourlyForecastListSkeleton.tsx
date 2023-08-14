@@ -1,6 +1,5 @@
 import SkeletonElement from "./SkeletonElement";
 
-
 interface Props {
     limit: number;
 }
