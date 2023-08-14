@@ -8,7 +8,9 @@ import { determineWeatherIcon } from "../utility/weatherIcons";
 
 import ForecastDescriptors from "./ForecastDescriptors";
 import InfoCard from "./InfoCard";
-import LoadingScreen from "./LoadingScreen";
+
+
+import HourlyForecastListSkeleton from "../skeletons/HourlyForecastListSkeleton";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -152,9 +154,16 @@ const DayView = () => {
     const parsedDayIndex = parseInt(dayIndex, 10);
 
     console.log("weeklyForecast", weeklyForecast);
+    
+    
+    const Today = new Date();
+    const currentTime = +Today.getHours();
+    
+    console.log("currentTime", currentTime);
 
     if (!weatherData) {
-        return <LoadingScreen />;
+        // If !weatherData - generete skeleton loading screens X-times remaining hours of the currently rendered day
+        return <HourlyForecastListSkeleton  limit={currentTime}/>;
     }
 
     // Destructure the weatherData object
@@ -167,10 +176,8 @@ const DayView = () => {
         more_info,
     } = weeklyForecast[parsedDayIndex];
 
-    const Today = new Date();
 
     const todayisBeingRendered = datesAreEqual(new Date(date), Today);
-    const currentTime = +Today.getHours();
 
     const dayweatherArr = dayTempArr
         .map((temp, index) => {
