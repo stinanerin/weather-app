@@ -35,6 +35,10 @@ $gradient-1: linear-gradient(180deg, $transparant-1 0%, $transparant-2 100%);
 // Color theme
 $text-clr: $p-white;
 
+// Measurements 
+
+$box-x: min(100%, 15rem);
+$box-x-l: min(100%, 20rem);
 
 
 // Breakpoints - mobile first

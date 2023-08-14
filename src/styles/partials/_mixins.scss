@@ -1,7 +1,8 @@
 
+@mixin card($clr-1: $transparant-1, $clr-2: $transparant-2) {
+    background: linear-gradient(180deg, $clr-1 0%, $clr-2 100%);
 
-@mixin card {
-    background: $gradient-1;
+    // background: $gradient-1;
     border-radius: $radius-min;
     box-shadow: $shadow 1.95px 1.95px 2.6px;
 

@@ -1,0 +1,67 @@
+@import "../../styles/partials/variables.scss";
+@import "../../styles/partials/mixins.scss";
+
+// todo mixin
+.info-box {
+    padding: $padding-primary;
+    border-radius: $radius-min;
+    font-size: 16px;
+    margin-bottom: 10px;
+    width: $box-x;
+    @media($md) {
+        width: $box-x-l;
+
+    }
+    text-align: center;
+    h2 {
+        font-size: 1rem;
+        @media($md) {
+            font-size: 1.5rem;
+        }
+    }
+    p {
+        font-size: 0.8rem;
+        @media($md) {
+            font-size: 1rem;
+        }
+    }
+}
+
+.info-box-success {
+    @include card(#edf5e7, #daf8c4);
+
+    border: 2px solid rgb(84, 127, 74);
+    * {
+        color: rgb(84, 127, 74);
+    }
+}
+
+.info-box-warning {
+    @include card(#fae0c7, #f8dabf);
+
+    border: 2px solid rgb(255, 152, 74);
+    * {
+        color: rgb(255, 152, 74);
+    }
+
+   
+}
+
+.info-box-danger {
+    @include card(#fcf2f2, rgb(241, 196, 196));
+
+    border: 2px solid rgb(209, 80, 74);
+    * {
+        color: #d1504a;
+    }
+}
+
+.info-box-info {
+    @include card(#eef6f8, #bbedf9);
+    border: 2px solid #4b90e3;
+    * {
+        color: rgb(75, 144, 227);
+    }
+   
+}
+  

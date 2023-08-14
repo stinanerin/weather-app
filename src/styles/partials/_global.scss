@@ -39,6 +39,23 @@ body {
     }
 }
 
+.elem-center {
+    display: grid;
+    place-items: center;
+}
+
+.weather-heading {
+    font-size: 1.6rem;
+    // font-weight: bold;
+    margin-bottom: 1em;
+    text-align: center;
+
+    @media($md) {
+        font-size: 2rem;
+
+    }
+}
+
 .forecast-card {
     @include card;
     margin-bottom: 1rem;
