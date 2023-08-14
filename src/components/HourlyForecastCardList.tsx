@@ -9,8 +9,8 @@ import { determineWeatherIcon } from "../utility/weatherIcons";
 import ForecastDescriptors from "./ForecastDescriptors";
 import InfoCard from "./InfoCard";
 
-
 import HourlyForecastListSkeleton from "../skeletons/HourlyForecastListSkeleton";
+import MoreInfoSectionSkeleton from "../skeletons/MoreInfoSectionSkeleton";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -170,7 +170,12 @@ const DayView = () => {
         // Ohterwise, just do 24
         const skeletonLimit = parsedDayIndex === 0 ? (24 - currentTime) : 24;
 
-        return <HourlyForecastListSkeleton  limit={skeletonLimit}/>;
+        return (
+            <>
+                <HourlyForecastListSkeleton  limit={skeletonLimit}/>
+                <MoreInfoSectionSkeleton />
+            </>
+        );
     }
     
     // Destructure the weatherData object
@@ -207,7 +212,10 @@ const DayView = () => {
     console.log("infoKeys", infoKeys);
 
     return (
+
+
         <div className="forecast-wrapper">
+
             <h2 className="heading">
                 <span>{getWeekday(date)}</span>
                 <span>{formatDate(date)}</span>
