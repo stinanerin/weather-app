@@ -1,12 +1,5 @@
-.forecast-wrapper {
-    width: 100%;
-    h2 {
-        display: flex;
-        justify-content: space-between
-    }
-}
 
-.current-temp-overview {
+.current-weather-display {
     @include card;
     text-align: center;
     padding: $padding;

@@ -1,32 +1,39 @@
-.hourly-forecast {
+.forecast-wrapper {
     width: 100%;
-    .left-cell {
-
-        padding: $padding-tertiary;
-
-        font-size: 0.9rem;
-        @media($sm) {
-            font-size: 1.125rem;
-        }
-    }
-
-    .right-cell {
+    h2 {
         display: flex;
-        text-align: center;
-
-        gap: 1rem;
-        font-size: 0.8rem;
-        
-        & div:last-child {
-            min-width: 50px;
-            // background-color: pink;
+        justify-content: space-between
+    }
+    .hourly-forecast {
+        width: 100%;
+        .left-cell {
+    
+            padding: $padding-tertiary;
+    
+            font-size: 0.9rem;
+            @media($sm) {
+                font-size: 1.125rem;
+            }
         }
-        
-        @media($sm) {
-            gap: 1.7rem;
-            font-size: 1rem;
-
-        }
-        
-    }    
+    
+        .right-cell {
+            display: flex;
+            text-align: center;
+    
+            gap: 1rem;
+            font-size: 0.8rem;
+            
+            & div:last-child {
+                min-width: 50px;
+                // background-color: pink;
+            }
+            
+            @media($sm) {
+                gap: 1.7rem;
+                font-size: 1rem;
+    
+            }
+            
+        }    
+    }
 }

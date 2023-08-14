@@ -8,7 +8,9 @@ import { determineWeatherIcon } from "../utility/weatherIcons";
 
 import ForecastDescriptors from "./ForecastDescriptors";
 import InfoCard from "./InfoCard";
-import LoadingScreen from "./LoadingScreen";
+
+import HourlyForecastListSkeleton from "../skeletons/HourlyForecastListSkeleton";
+import MoreInfoSectionSkeleton from "../skeletons/MoreInfoSectionSkeleton";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -73,6 +75,8 @@ type MoreInfo = {
 
 const DayView = () => {
     const { weatherData } = useWeatherContext();
+
+    // todo, maybe move this to when allt eh data first is fetched and then add it ti the useWeather cotnext
 
     //todo: move function
     const formatHourlyTemperatureData = (forecast: WeatherObj) => {
@@ -151,12 +155,29 @@ const DayView = () => {
     const { dayIndex } = useParams<{ dayIndex: string }>();
     const parsedDayIndex = parseInt(dayIndex, 10);
 
+    console.log("parsedDayIndex", parsedDayIndex)
+
     console.log("weeklyForecast", weeklyForecast);
+        
 
+    const Today = new Date();
+    const currentTime = +Today.getHours();
+
+        
     if (!weatherData) {
-        return <LoadingScreen />;
-    }
+        // If !weatherData - generete skeleton loading screens 
+        // if the currently rendered date is today, limit amount of skeletons to X-times remaining hours of the day
+        // Ohterwise, just do 24
+        const skeletonLimit = parsedDayIndex === 0 ? (24 - currentTime) : 24;
 
+        return (
+            <>
+                <HourlyForecastListSkeleton  limit={skeletonLimit}/>
+                <MoreInfoSectionSkeleton />
+            </>
+        );
+    }
+    
     // Destructure the weatherData object
     const {
         date,
@@ -166,11 +187,8 @@ const DayView = () => {
         dayWindspeedArr,
         more_info,
     } = weeklyForecast[parsedDayIndex];
-
-    const Today = new Date();
-
+    
     const todayisBeingRendered = datesAreEqual(new Date(date), Today);
-    const currentTime = +Today.getHours();
 
     const dayweatherArr = dayTempArr
         .map((temp, index) => {
@@ -194,7 +212,10 @@ const DayView = () => {
     console.log("infoKeys", infoKeys);
 
     return (
+
+
         <div className="forecast-wrapper">
+
             <h2 className="heading">
                 <span>{getWeekday(date)}</span>
                 <span>{formatDate(date)}</span>

@@ -1,5 +1,8 @@
 import WeeklyOverview from "../components/WeeklyOverview";
-import { getWeekday, formatDate } from "../utility/helper";
+import CurrentWeatherDisplay from "../components/CurrentWeatherDisplay";
+
+import SkeletonOverview from "../skeletons/SkeletonOverview";
+import CurrentDisplaySkeleton from "../skeletons/CurrentDisplaySkeleton";
 
 import { useWeatherContext } from "../utility/useWeatherContext";
 
@@ -9,21 +12,16 @@ const HomePage = () => {
     console.log(weatherData);
 
     if (!weatherData) {
-        return <p>Loading...</p>;
+        return (
+            <>
+                <CurrentDisplaySkeleton />
+                <SkeletonOverview />
+            </>
+        );
     }
     return (
         <>
-            <div className="current-temp-overview">
-                <h2 className="heading">
-                    {/* todo is it in the weather arr iobject already?{location} */}
-                    {weatherData.location}
-                </h2>
-                <p>
-                    {getWeekday(weatherData.current_weather.time)}{" "}
-                    {formatDate(weatherData.current_weather.time)}
-                </p>
-                <p>{weatherData.current_weather.temperature}°</p>
-            </div>
+            <CurrentWeatherDisplay weatherData={weatherData} />
             <WeeklyOverview forecast={weatherData} />
         </>
     );
