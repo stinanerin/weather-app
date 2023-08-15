@@ -1,4 +1,4 @@
-import "./Alert.scss";
+import "./alert.scss";
 
 interface AlertProps {
     type?: "info" | "success" | "warning" | "danger";
