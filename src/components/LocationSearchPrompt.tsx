@@ -1,6 +1,19 @@
 import Alert from "./Alert/Alert";
+import { useWeatherContext } from "../utility/useWeatherContext";
+import { useEffect } from "react";
 
 const LocationSearchPrompt = () => {
+    const { weatherData } = useWeatherContext();
+
+    console.log("weatherData", weatherData);
+
+    useEffect(() => {
+        if (weatherData) {
+            // Redirect the user to the main route if weatherData is available
+            window.location.hash = "/";
+        }
+    }, [weatherData]);
+
     const msg = `We understand that sometimes granting location permission can be
     a concern. No worries! You can still get
     weather information by searching for a specific location.
@@ -8,9 +21,6 @@ const LocationSearchPrompt = () => {
 
     return (
         <div className="elem-center">
-            <h1 className="weather-heading">
-                🌦️ Welcome to our Weather Application! 🌈
-            </h1>
             <Alert message={msg} heading="ℹ️  Location Access Not Granted" />
         </div>
     );
