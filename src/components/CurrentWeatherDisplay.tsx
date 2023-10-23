@@ -2,18 +2,19 @@ import { getWeekday, formatDate } from "../utility/helper";
 import { WeatherData } from "../models/WeatherData";
 
 interface Props {
-    WeatherData: WeatherData;
+    weatherData: WeatherData;
 }
 
-const CurrentWeatherDisplay = ({ WeatherData }: Props) => {
+const CurrentWeatherDisplay = ({ weatherData }: Props) => {
+    console.log(weatherData);
     return (
         <div className="current-weather-display">
-            <h2 className="heading">{WeatherData.location}</h2>
+            <h2 className="heading">{weatherData.location}</h2>
             <p>
-                {getWeekday(WeatherData.current_weather.time)}{" "}
-                {formatDate(WeatherData.current_weather.time)}
+                {getWeekday(weatherData.current_weather.time)}{" "}
+                {formatDate(weatherData.current_weather.time)}
             </p>
-            <p>{WeatherData.current_weather.temperature}°</p>
+            <p>{weatherData.current_weather.temperature}°</p>
         </div>
     );
 };
