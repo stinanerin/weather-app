@@ -1,14 +1,22 @@
-import { useEffect, useState, ChangeEvent } from "react";
+import { useState, ChangeEvent } from "react";
 
 import { fetchData } from "../../utility/api";
 import SearchList from "./SearchList";
 
 import { onSearchResultClick } from "../../models/OnSearchResultClick";
+import { SearchResult } from "../../models/SearchResult";
 
-const getSearchResult = async (input: string) => {
+interface Props {
+    onSearchResultClick: onSearchResultClick;
+}
+
+const getSearchResult = async (
+    input: string
+): Promise<SearchResult[] | null> => {
     try {
         const url = `https://geocoding-api.open-meteo.com/v1/search?name=${input}`;
         const res = await fetchData(url);
+        console.log(res?.data);
         if (res?.status !== 200) {
             //todo
             throw new Error();
@@ -16,47 +24,30 @@ const getSearchResult = async (input: string) => {
         return res?.data.results;
     } catch (error) {
         console.warn("Search result error", error);
-        return error;
+        return null;
     }
 };
 
-const Search = ({
-    onSearchResultClick,
-}: {
-    onSearchResultClick: onSearchResultClick;
-}) => {
-    const [searchResult, setSearchResult] = useState<
-        | {
-              id: number;
-              name: string;
-              admin1: string;
-              country: string;
-              latitude: number;
-              longitude: number;
-          }[]
-        | null
-    >(null);
-
+const Search = ({ onSearchResultClick }: Props) => {
+    const [searchResult, setSearchResult] = useState<SearchResult[] | null>(
+        null
+    );
     const [searchValue, setSearchValue] = useState<string>("");
 
-    useEffect(() => {
-        // console.log("searchResult in useEffect:", searchResult);
-    }, [searchResult]);
-
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        // console.log(event.target.value)
+        const searchValue = event.target.value;
 
         // Updates input field with current search value
-        setSearchValue(event.target.value);
+        setSearchValue(searchValue);
         // Fetches suggested results
         fetchDataAndSetResult(event.target.value);
     };
 
     const fetchDataAndSetResult = async (input: string) => {
         const result = await getSearchResult(input);
-        // console.log("result", result);
         setSearchResult(result);
     };
+
     const handleSearchResult = (
         location: string,
         latitude: number,
