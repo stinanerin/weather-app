@@ -28,7 +28,7 @@ library.add(
     faCloudShowersHeavy
 );
 
-import { WeatherData } from "../models/WeatherData";
+import { WeatherData } from "../../models/WeatherData";
 
 const WeeklyOverview = ({ forecast }: { forecast: WeatherData }) => {
     const {
