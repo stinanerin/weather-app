@@ -9,7 +9,7 @@ import { useWeatherContext } from "../utility/useWeatherContext";
 const HomePage = () => {
     const { weatherData } = useWeatherContext();
 
-    console.log(weatherData);
+    // console.log(weatherData);
 
     if (!weatherData) {
         return (

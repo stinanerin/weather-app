@@ -1,11 +1,18 @@
-import { useEffect, useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, FocusEvent, useRef, useEffect } from "react";
 
 import { fetchData } from "../../utility/api";
 import SearchList from "./SearchList";
 
 import { onSearchResultClick } from "../../models/OnSearchResultClick";
+import { SearchResult } from "../../models/SearchResult";
 
-const getSearchResult = async (input: string) => {
+interface Props {
+    onSearchResultClick: onSearchResultClick;
+}
+
+const getSearchResult = async (
+    input: string
+): Promise<SearchResult[] | null> => {
     try {
         const url = `https://geocoding-api.open-meteo.com/v1/search?name=${input}`;
         const res = await fetchData(url);
@@ -16,47 +23,57 @@ const getSearchResult = async (input: string) => {
         return res?.data.results;
     } catch (error) {
         console.warn("Search result error", error);
-        return error;
+        return null;
     }
 };
 
-const Search = ({
-    onSearchResultClick,
-}: {
-    onSearchResultClick: onSearchResultClick;
-}) => {
-    const [searchResult, setSearchResult] = useState<
-        | {
-              id: number;
-              name: string;
-              admin1: string;
-              country: string;
-              latitude: number;
-              longitude: number;
-          }[]
-        | null
-    >(null);
-
+const Search = ({ onSearchResultClick }: Props) => {
+    const [searchResult, setSearchResult] = useState<SearchResult[] | null>(
+        null
+    );
     const [searchValue, setSearchValue] = useState<string>("");
+    const [showSearchList, setShowSearchList] = useState(false);
+
+    const searchInputRef = useRef<HTMLInputElement>();
+    const searchListRef = useRef<HTMLUListElement>();
 
     useEffect(() => {
-        // console.log("searchResult in useEffect:", searchResult);
-    }, [searchResult]);
+        document.addEventListener("click", handleDocumentClick);
+        document.addEventListener("keyup", handleTab);
+
+        return () => {
+            document.removeEventListener("click", handleDocumentClick);
+            document.removeEventListener("keyup", handleTab);
+        };
+    }, []);
+
+    const handleTab = (e: KeyboardEvent) => {
+        const activeElement = document.activeElement as HTMLElement;
+        if (
+            e.key === "Tab" &&
+            searchListRef.current &&
+            activeElement !== searchInputRef.current &&
+            !searchListRef.current.contains(activeElement)
+        ) {
+            setShowSearchList(false);
+        }
+    };
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        // console.log(event.target.value)
+        const searchValue = event.target.value;
 
         // Updates input field with current search value
-        setSearchValue(event.target.value);
+        setSearchValue(searchValue);
         // Fetches suggested results
         fetchDataAndSetResult(event.target.value);
     };
 
     const fetchDataAndSetResult = async (input: string) => {
         const result = await getSearchResult(input);
-        // console.log("result", result);
         setSearchResult(result);
+        setShowSearchList(true);
     };
+
     const handleSearchResult = (
         location: string,
         latitude: number,
@@ -70,6 +87,28 @@ const Search = ({
         setSearchValue("");
     };
 
+    const handleDocumentClick = () => {
+        const activeElement = document.activeElement;
+
+        if (
+            searchInputRef.current &&
+            !searchInputRef.current.contains(activeElement) &&
+            searchListRef.current &&
+            !searchListRef.current.contains(activeElement)
+        ) {
+            // Click is outside the input field
+            setShowSearchList(false);
+        }
+    };
+
+    const handleInputBlur = (e: FocusEvent<HTMLInputElement>) => {
+        if (
+            searchListRef.current &&
+            !searchListRef.current.contains(e.relatedTarget)
+        ) {
+            setShowSearchList(false);
+        }
+    };
     return (
         <div>
             <input
@@ -81,11 +120,16 @@ const Search = ({
                             so you can access and interact with the event data
                             within your event handler function. */
                 onChange={handleChange}
+                onBlur={handleInputBlur}
+                ref={searchInputRef as React.RefObject<HTMLInputElement>}
             />
-            {searchResult && (
+            {showSearchList && searchResult && (
                 <SearchList
                     arr={searchResult}
                     onSearchResultClick={handleSearchResult}
+                    searchListRef={
+                        searchListRef as React.RefObject<HTMLUListElement>
+                    }
                 />
             )}
         </div>
