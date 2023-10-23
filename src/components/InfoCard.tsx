@@ -6,7 +6,7 @@ interface Props {
     unit?: string;
 }
 
-const InfoCard = ({ heading, data, unit }: Props) => {
+export const InfoCard = ({ heading, data, unit }: Props) => {
     return (
         <article className="info-card">
             <h3>{toUpperCaseStr(heading)}</h3>
@@ -16,5 +16,3 @@ const InfoCard = ({ heading, data, unit }: Props) => {
         </article>
     );
 };
-
-export default InfoCard;

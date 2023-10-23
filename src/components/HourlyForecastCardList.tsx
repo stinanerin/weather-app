@@ -3,7 +3,7 @@ import { determineWeatherIcon } from "../utility/weatherIcons";
 import { createWeekTempArr } from "../utility/format";
 
 import ForecastDescriptors from "./ForecastDescriptors";
-import InfoCard from "./InfoCard";
+import { MoreInfoWrapper } from "./MoreInfoWrapper";
 
 import HourlyForecastListSkeleton from "../skeletons/HourlyForecastListSkeleton";
 import MoreInfoSectionSkeleton from "../skeletons/MoreInfoSectionSkeleton";
@@ -20,15 +20,6 @@ interface weatherDay {
     wind_speed: number;
     weather_code: number;
 }
-
-type MoreInfo = {
-    uv: { data: number; unit: string };
-    pressure: { data: number; unit: string };
-    visibility: { data: number; unit: string };
-    humidity: { data: number; unit: string };
-    sunrise: { data: string; unit: string };
-    sunset: { data: string; unit: string };
-};
 
 const DayView = () => {
     const { weatherData } = useWeatherContext();
@@ -84,12 +75,6 @@ const DayView = () => {
         })
         .filter((item): item is weatherDay => item !== null) as weatherDay[];
 
-    console.log("dayweatherArr", dayweatherArr);
-
-    const infoKeys = Object.keys(more_info);
-
-    console.log("infoKeys", infoKeys);
-
     return (
         <div className="forecast-wrapper">
             <h2 className="heading">
@@ -136,25 +121,7 @@ const DayView = () => {
                     )}
                 </>
             </ul>
-            <div>
-                <h2 className="heading">Other info</h2>
-                <div className="more-info-wrapper">
-                    {infoKeys.map((key, index) => {
-                        return (
-                            <InfoCard
-                                key={key + index}
-                                heading={key}
-                                data={more_info[key as keyof MoreInfo].data}
-                                unit={more_info[key as keyof MoreInfo].unit}
-                            />
-                        );
-                    })}
-                </div>
-
-                {/*todo:
-                 * sunset - sunrise icons
-                 */}
-            </div>
+            <MoreInfoWrapper moreInfo={more_info} />
         </div>
     );
 };
