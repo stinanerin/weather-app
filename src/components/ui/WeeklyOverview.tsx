@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 
 import ForecastDescriptors from "./ForecastDescriptors";
 
-import { getWeekday, formatDate } from "../utility/helper";
+import { getWeekday, formatDate } from "../../utility/helper";
 
-import { determineWeatherIcon } from "../utility/weatherIcons";
+import { determineWeatherIcon } from "../../utility/weatherIcons";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

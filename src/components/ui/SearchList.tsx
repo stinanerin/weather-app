@@ -1,4 +1,4 @@
-import { onSearchResultClick } from "../models/OnSearchResultClick";
+import { onSearchResultClick } from "../../models/OnSearchResultClick";
 
 interface Props {
     arr: {

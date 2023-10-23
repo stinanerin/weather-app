@@ -1,8 +1,8 @@
-import WeeklyOverview from "../components/WeeklyOverview";
-import CurrentWeatherDisplay from "../components/CurrentWeatherDisplay";
+import WeeklyOverview from "../components/ui/WeeklyOverview";
+import CurrentWeatherDisplay from "../components/ui/CurrentWeatherDisplay";
 
-import SkeletonOverview from "../skeletons/SkeletonOverview";
-import CurrentDisplaySkeleton from "../skeletons/CurrentDisplaySkeleton";
+import SkeletonOverview from "../components/skeletons/SkeletonOverview";
+import CurrentDisplaySkeleton from "../components/skeletons/CurrentDisplaySkeleton";
 
 import { useWeatherContext } from "../utility/useWeatherContext";
 
