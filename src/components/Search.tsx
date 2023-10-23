@@ -3,13 +3,7 @@ import { useEffect, useState, ChangeEvent } from "react";
 import { fetchData } from "../utility/api";
 import SearchList from "./SearchList";
 
-interface SearchProps {
-    onSearchResultClick: (
-        location: string,
-        latitude: number,
-        longitude: number
-    ) => void;
-}
+import { onSearchResultClick } from "../models/OnSearchResultClick";
 
 const getSearchResult = async (input: string) => {
     try {
@@ -26,7 +20,11 @@ const getSearchResult = async (input: string) => {
     }
 };
 
-const Search = ({ onSearchResultClick }: SearchProps) => {
+const Search = ({
+    onSearchResultClick,
+}: {
+    onSearchResultClick: onSearchResultClick;
+}) => {
     const [searchResult, setSearchResult] = useState<
         | {
               id: number;
@@ -66,10 +64,10 @@ const Search = ({ onSearchResultClick }: SearchProps) => {
     ) => {
         // Updates app states
         onSearchResultClick(location, latitude, longitude);
-         // Hide the search result list when a city is clicked
-         setSearchResult(null);
-         // Clears the input field after a city is clicked
-        setSearchValue(""); 
+        // Hide the search result list when a city is clicked
+        setSearchResult(null);
+        // Clears the input field after a city is clicked
+        setSearchValue("");
     };
 
     return (
