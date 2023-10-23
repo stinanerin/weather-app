@@ -6,7 +6,6 @@ interface Props {
 }
 
 const CurrentWeatherDisplay = ({ weatherData }: Props) => {
-    console.log(weatherData);
     return (
         <div className="current-weather-display">
             <h2 className="heading">{weatherData.location}</h2>

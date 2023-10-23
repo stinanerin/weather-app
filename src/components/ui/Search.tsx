@@ -16,7 +16,6 @@ const getSearchResult = async (
     try {
         const url = `https://geocoding-api.open-meteo.com/v1/search?name=${input}`;
         const res = await fetchData(url);
-        console.log(res?.data);
         if (res?.status !== 200) {
             //todo
             throw new Error();
@@ -103,12 +102,10 @@ const Search = ({ onSearchResultClick }: Props) => {
     };
 
     const handleInputBlur = (e: FocusEvent<HTMLInputElement>) => {
-        console.log("inside handleInputBlur");
         if (
             searchListRef.current &&
             !searchListRef.current.contains(e.relatedTarget)
         ) {
-            console.log("handleInputBlur dont show list");
             setShowSearchList(false);
         }
     };
