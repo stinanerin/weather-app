@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { HashRouter as Router } from "react-router-dom";
 
 import { getLocation } from "./utility/helper";
@@ -8,6 +8,7 @@ import AppRouter from "./utility/AppRouter";
 
 import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
+import { SkipToContent } from "./components/ui/SkipToContent";
 
 import { useWeatherContext } from "./utility/useWeatherContext";
 
@@ -18,6 +19,8 @@ const App = () => {
 
     const [latitude, setLatitude] = useState<number | null>(null);
     const [longitude, setLongitude] = useState<number | null>(null);
+
+    const mainRef = useRef<HTMLDivElement>(null);
 
     const handleSearchResult = (
         location: string,
@@ -91,10 +94,11 @@ const App = () => {
 
     return (
         <Router>
+            <SkipToContent refElem={mainRef}></SkipToContent>
             <Header onSearchResultClick={handleSearchResult} />
-            <div className="app-container">
+            <main ref={mainRef} className="app-container" tabIndex={0}>
                 <AppRouter />
-            </div>
+            </main>
             <Footer />
         </Router>
     );
