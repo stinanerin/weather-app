@@ -1,6 +1,6 @@
 
 export const determineWeatherIcon = (weatherCode: number) => {
-    // Should there be a default icon ?????
+    //todo Should there be a default icon ?????
     if (weatherCode == 0) {
         return "sun"
     } else if (weatherCode > 0 && weatherCode < 3) {

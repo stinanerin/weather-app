@@ -1,7 +1,7 @@
 
 import { useContext } from 'react';
 
-import { WeatherContext } from './WeatherContext'; // Import WeatherContext from the correct path
+import { WeatherContext } from './WeatherContext'; 
 
 export const useWeatherContext = () => {
     const context = useContext(WeatherContext);

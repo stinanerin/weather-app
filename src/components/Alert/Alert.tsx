@@ -1,19 +1,25 @@
 import "./alert.scss";
 
+enum AlertType {
+    Info = "info",
+    Success = "success",
+    Warning = "warning",
+    Danger = "danger",
+}
 interface AlertProps {
-    type?: "info" | "success" | "warning" | "danger";
+    type?: AlertType;
     message: string;
     heading: string;
 }
 
-const Alert = ({ type = "info", message, heading }: AlertProps) => {
+const Alert = ({ type = AlertType.Info, message, heading }: AlertProps) => {
     const getTypeClass = () => {
         switch (type) {
-            case "success":
+            case AlertType.Success:
                 return "info-box-success";
-            case "warning":
+            case AlertType.Warning:
                 return "info-box-warning";
-            case "danger":
+            case AlertType.Danger:
                 return "info-box-danger";
             default:
                 return "info-box-info";

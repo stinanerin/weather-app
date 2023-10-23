@@ -1,10 +1,6 @@
-import {
-    getWeekday,
-    formatDate,
-    datesAreEqual,
-    calculateMean,
-} from "../utility/helper";
+import { getWeekday, formatDate, datesAreEqual } from "../utility/helper";
 import { determineWeatherIcon } from "../utility/weatherIcons";
+import { createWeekTempArr } from "../utility/format";
 
 import ForecastDescriptors from "./ForecastDescriptors";
 import InfoCard from "./InfoCard";
@@ -25,45 +21,6 @@ interface weatherDay {
     weather_code: number;
 }
 
-//todo! if weatherData is null amke an api call? in case user direclty navigates to a day/:idnex page
-interface WeatherObj {
-    // typeannotation...
-    current_weather: CurrentWeatherData;
-    hourly: HourlyForecastWeatherObj;
-    //!Nytt
-    daily: DailyWeatherSumsObj;
-    hourly_units: {
-        [key: string]: string;
-    };
-}
-
-interface CurrentWeatherData {
-    time: string;
-    temperature: number;
-}
-
-interface HourlyForecastWeatherObj {
-    temperature_2m: number[];
-    weathercode: number[];
-    windspeed_10m: number[];
-    rain: number[];
-    pressure_msl: number[];
-    relativehumidity_2m: number[];
-    visibility: number[];
-}
-interface DailyWeatherSumsObj {
-    weathercode: number[];
-    temperature_2m_max: number[];
-    temperature_2m_min: number[];
-    rain_sum: number[];
-    uv_index_max: number[];
-    sunrise: number[];
-    sunset: number[];
-    time: string[];
-}
-
-//!Nytt
-
 type MoreInfo = {
     uv: { data: number; unit: string };
     pressure: { data: number; unit: string };
@@ -76,108 +33,30 @@ type MoreInfo = {
 const DayView = () => {
     const { weatherData } = useWeatherContext();
 
-    // todo, maybe move this to when allt eh data first is fetched and then add it ti the useWeather cotnext
-
-    //todo: move function
-    const formatHourlyTemperatureData = (forecast: WeatherObj) => {
-        const currentTime = new Date(forecast.current_weather.time);
-
-        const {
-            temperature_2m,
-            weathercode,
-            windspeed_10m,
-            rain,
-            pressure_msl,
-            visibility,
-            relativehumidity_2m,
-        } = forecast.hourly;
-
-        const weekTempArr = [];
-
-        for (let i = 0; i < rain.length; i += 24) {
-            const dayTempArr = temperature_2m.slice(i, i + 24);
-            const dayWeatherCodeArr = weathercode.slice(i, i + 24);
-            const dayWindspeedArr = windspeed_10m.slice(i, i + 24);
-            const dayRainArr = rain.slice(i, i + 24);
-            const dayPressureArr = pressure_msl.slice(i, i + 24);
-            const dayVisibilityArr = visibility.slice(i, i + 24);
-            const dayHumidityArr = relativehumidity_2m.slice(i, i + 24);
-
-            const currentDate = new Date(currentTime);
-            currentDate.setDate(currentDate.getDate() + i / 24);
-
-            weekTempArr.push({
-                date: currentDate.toISOString(),
-                more_info: {
-                    uv: {
-                        data: forecast.daily.uv_index_max[i / 24],
-                        unit: "",
-                    },
-                    pressure: {
-                        data: Math.round(calculateMean(dayPressureArr)),
-                        unit: forecast.hourly_units.pressure_msl,
-                    },
-                    visibility: {
-                        data: Math.round(calculateMean(dayVisibilityArr)),
-                        unit: forecast.hourly_units.visibility,
-                    },
-                    humidity: {
-                        data: Math.round(calculateMean(dayHumidityArr)),
-                        unit: forecast.hourly_units.relativehumidity_2m,
-                    },
-                    // toString() for typescript
-                    sunrise: {
-                        data: forecast.daily.sunrise[i / 24]
-                            .toString()
-                            .slice(11),
-                        unit: "",
-                    },
-                    sunset: {
-                        data: forecast.daily.sunset[i / 24]
-                            .toString()
-                            .slice(11),
-                        unit: "",
-                    },
-                },
-                dayTempArr,
-                dayWeatherCodeArr,
-                dayWindspeedArr,
-                dayRainArr,
-            });
-        }
-        return weekTempArr;
-    };
-
     const weeklyForecast = weatherData?.hourly
-        ? formatHourlyTemperatureData(weatherData)
+        ? createWeekTempArr(weatherData)
         : [];
-    // Gets day index from URL parameter
+
     const { dayIndex } = useParams<{ dayIndex: string }>();
     const parsedDayIndex = parseInt(dayIndex, 10);
-
-    console.log("parsedDayIndex", parsedDayIndex)
-
-    console.log("weeklyForecast", weeklyForecast);
-        
 
     const Today = new Date();
     const currentTime = +Today.getHours();
 
-        
     if (!weatherData) {
-        // If !weatherData - generete skeleton loading screens 
+        // If !weatherData - generete skeleton loading screens
         // if the currently rendered date is today, limit amount of skeletons to X-times remaining hours of the day
         // Ohterwise, just do 24
-        const skeletonLimit = parsedDayIndex === 0 ? (24 - currentTime) : 24;
+        const skeletonLimit = parsedDayIndex === 0 ? 24 - currentTime : 24;
 
         return (
             <>
-                <HourlyForecastListSkeleton  limit={skeletonLimit}/>
+                <HourlyForecastListSkeleton limit={skeletonLimit} />
                 <MoreInfoSectionSkeleton />
             </>
         );
     }
-    
+
     // Destructure the weatherData object
     const {
         date,
@@ -187,7 +66,7 @@ const DayView = () => {
         dayWindspeedArr,
         more_info,
     } = weeklyForecast[parsedDayIndex];
-    
+
     const todayisBeingRendered = datesAreEqual(new Date(date), Today);
 
     const dayweatherArr = dayTempArr
@@ -212,10 +91,7 @@ const DayView = () => {
     console.log("infoKeys", infoKeys);
 
     return (
-
-
         <div className="forecast-wrapper">
-
             <h2 className="heading">
                 <span>{getWeekday(date)}</span>
                 <span>{formatDate(date)}</span>
@@ -237,11 +113,7 @@ const DayView = () => {
                             index
                         ) => {
                             return (
-                                <li
-                                    //todo? change key
-                                    key={index}
-                                    className="forecast-card"
-                                >
+                                <li key={index} className="forecast-card">
                                     <div className="left-cell">
                                         {hour}
                                         :00
@@ -267,20 +139,20 @@ const DayView = () => {
             <div>
                 <h2 className="heading">Other info</h2>
                 <div className="more-info-wrapper">
-                    {infoKeys.map((key) => {
-                        return <InfoCard
-                            key={key}
-                            heading={key}
-                            data={more_info[key as keyof MoreInfo].data}
-                            unit={more_info[key as keyof MoreInfo].unit}
-                        />;
+                    {infoKeys.map((key, index) => {
+                        return (
+                            <InfoCard
+                                key={key + index}
+                                heading={key}
+                                data={more_info[key as keyof MoreInfo].data}
+                                unit={more_info[key as keyof MoreInfo].unit}
+                            />
+                        );
                     })}
                 </div>
 
                 {/*todo:
                  * sunset - sunrise icons
-                 * all headings fixed
-                 * add units for pressure and so on
                  */}
             </div>
         </div>

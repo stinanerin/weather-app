@@ -5,8 +5,6 @@ import { useEffect } from "react";
 const LocationSearchPrompt = () => {
     const { weatherData } = useWeatherContext();
 
-    console.log("weatherData", weatherData);
-
     useEffect(() => {
         if (weatherData) {
             // Redirect the user to the main route if weatherData is available

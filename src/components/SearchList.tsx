@@ -1,6 +1,6 @@
+import { onSearchResultClick } from "../models/OnSearchResultClick";
 
 interface Props {
-    // Typeannotation
     arr: {
         id: number;
         name: string;
@@ -10,15 +10,10 @@ interface Props {
         latitude: number;
         longitude: number;
     }[];
-    onSearchResultClick: (
-        location: string,
-        latitude: number,
-        longitude: number
-    ) => void;
+    onSearchResultClick: onSearchResultClick;
 }
 
 const SearchList = ({ arr, onSearchResultClick }: Props) => {
-
     const formattedSearchResults = arr.map((city) => (
         <li
             key={city.id}
@@ -26,7 +21,6 @@ const SearchList = ({ arr, onSearchResultClick }: Props) => {
                 onSearchResultClick(
                     city.name,
                     // country: city.country || city.countryName,
-
                     city.latitude,
                     city.longitude
                 );

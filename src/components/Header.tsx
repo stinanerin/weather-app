@@ -2,15 +2,13 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo-mini.svg";
 import Search from "./Search";
 
-interface SearchProps {
-    onSearchResultClick: (
-        location: string,
-        latitude: number,
-        longitude: number
-    ) => void;
-}
+import { onSearchResultClick } from "../models/OnSearchResultClick";
 
-const Header = ({ onSearchResultClick }: SearchProps) => {
+const Header = ({
+    onSearchResultClick,
+}: {
+    onSearchResultClick: onSearchResultClick;
+}) => {
     return (
         <header className="header">
             <Link to="/">

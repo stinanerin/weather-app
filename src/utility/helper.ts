@@ -1,4 +1,3 @@
-
 import { getLocationData } from "./api";
 
 export const formatDate = (date: string) => {
@@ -21,30 +20,6 @@ const weekdays = Array.from({ length: 7 }, (e, i) => {
         weekday: "long",
     });
 });
-
-// export const calculateFrequentNum = (arr: number[]) => {
-
-//     let maxcount = 0;
-//     let element_having_max_freq;
-
-//     const n = arr.length
-
-//     for (let i = 0; i < n; i++) {
-//         let count = 0;
-//         for (let j = 0; j < n; j++) {
-//             if (arr[i] == arr[j])
-//                 count++;
-//         }
-
-//         if (count > maxcount) {
-//             maxcount = count;
-//             element_having_max_freq = arr[i];
-//         }
-//     }
-
-//     return element_having_max_freq;
-
-// }
 
 export const datesAreEqual = (d1: Date, d2: Date) => {
     return d1.toDateString() === d2.toDateString();
