@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import logo from "../assets/logo-mini.svg";
-import Search from "./Search";
+import logo from "../../assets/logo-mini.svg";
+import Search from "../ui/Search";
 
-import { onSearchResultClick } from "../models/OnSearchResultClick";
+import { onSearchResultClick } from "../../models/OnSearchResultClick";
 
 const Header = ({
     onSearchResultClick,

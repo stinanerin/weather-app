@@ -1,9 +1,9 @@
 import { useEffect, useState, ChangeEvent } from "react";
 
-import { fetchData } from "../utility/api";
+import { fetchData } from "../../utility/api";
 import SearchList from "./SearchList";
 
-import { onSearchResultClick } from "../models/OnSearchResultClick";
+import { onSearchResultClick } from "../../models/OnSearchResultClick";
 
 const getSearchResult = async (input: string) => {
     try {

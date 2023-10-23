@@ -1,4 +1,4 @@
-import { toUpperCaseStr } from "../utility/helper";
+import { toUpperCaseStr } from "../../utility/helper";
 
 interface Props {
     heading: string;

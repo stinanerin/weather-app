@@ -1,5 +1,5 @@
-import { getWeekday, formatDate } from "../utility/helper";
-import { WeatherData } from "../models/WeatherData";
+import { getWeekday, formatDate } from "../../utility/helper";
+import { WeatherData } from "../../models/WeatherData";
 
 interface Props {
     weatherData: WeatherData;

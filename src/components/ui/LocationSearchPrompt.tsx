@@ -1,5 +1,5 @@
-import Alert from "./Alert/Alert";
-import { useWeatherContext } from "../utility/useWeatherContext";
+import Alert from "../Alert/Alert";
+import { useWeatherContext } from "../../utility/useWeatherContext";
 import { useEffect } from "react";
 
 const LocationSearchPrompt = () => {

@@ -1,6 +1,6 @@
-import { getWeekday, formatDate, datesAreEqual } from "../utility/helper";
-import { determineWeatherIcon } from "../utility/weatherIcons";
-import { createWeekTempArr } from "../utility/format";
+import { getWeekday, formatDate, datesAreEqual } from "../../utility/helper";
+import { determineWeatherIcon } from "../../utility/weatherIcons";
+import { createWeekTempArr } from "../../utility/format";
 
 import ForecastDescriptors from "./ForecastDescriptors";
 import { MoreInfoWrapper } from "./MoreInfoWrapper";
@@ -11,7 +11,7 @@ import MoreInfoSectionSkeleton from "../skeletons/MoreInfoSectionSkeleton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useParams } from "react-router-dom";
-import { useWeatherContext } from "../utility/useWeatherContext";
+import { useWeatherContext } from "../../utility/useWeatherContext";
 
 interface weatherDay {
     hour: string | number;
