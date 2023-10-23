@@ -4,9 +4,10 @@ import { SearchResult } from "../../models/SearchResult";
 interface Props {
     arr: SearchResult[];
     onSearchResultClick: onSearchResultClick;
+    searchListRef: React.RefObject<HTMLUListElement>;
 }
 
-const SearchList = ({ arr, onSearchResultClick }: Props) => {
+const SearchList = ({ arr, onSearchResultClick, searchListRef }: Props) => {
     const handleKeyPress = (
         event: React.KeyboardEvent<HTMLLIElement>,
         city: SearchResult
@@ -34,7 +35,11 @@ const SearchList = ({ arr, onSearchResultClick }: Props) => {
         </li>
     ));
 
-    return <ul className="search-results">{formattedSearchResults}</ul>;
+    return (
+        <ul ref={searchListRef} className="search-results">
+            {formattedSearchResults}
+        </ul>
+    );
 };
 
 export default SearchList;

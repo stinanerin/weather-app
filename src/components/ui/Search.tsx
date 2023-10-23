@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, FocusEvent, useRef, useEffect } from "react";
 
 import { fetchData } from "../../utility/api";
 import SearchList from "./SearchList";
@@ -33,6 +33,32 @@ const Search = ({ onSearchResultClick }: Props) => {
         null
     );
     const [searchValue, setSearchValue] = useState<string>("");
+    const [showSearchList, setShowSearchList] = useState(false);
+
+    const searchInputRef = useRef<HTMLInputElement>();
+    const searchListRef = useRef<HTMLUListElement>();
+
+    useEffect(() => {
+        document.addEventListener("click", handleDocumentClick);
+        document.addEventListener("keyup", handleTab);
+
+        return () => {
+            document.removeEventListener("click", handleDocumentClick);
+            document.removeEventListener("keyup", handleTab);
+        };
+    }, []);
+
+    const handleTab = (e: KeyboardEvent) => {
+        const activeElement = document.activeElement as HTMLElement;
+        if (
+            e.key === "Tab" &&
+            searchListRef.current &&
+            activeElement !== searchInputRef.current &&
+            !searchListRef.current.contains(activeElement)
+        ) {
+            setShowSearchList(false);
+        }
+    };
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const searchValue = event.target.value;
@@ -46,6 +72,7 @@ const Search = ({ onSearchResultClick }: Props) => {
     const fetchDataAndSetResult = async (input: string) => {
         const result = await getSearchResult(input);
         setSearchResult(result);
+        setShowSearchList(true);
     };
 
     const handleSearchResult = (
@@ -61,6 +88,30 @@ const Search = ({ onSearchResultClick }: Props) => {
         setSearchValue("");
     };
 
+    const handleDocumentClick = () => {
+        const activeElement = document.activeElement;
+
+        if (
+            searchInputRef.current &&
+            !searchInputRef.current.contains(activeElement) &&
+            searchListRef.current &&
+            !searchListRef.current.contains(activeElement)
+        ) {
+            // Click is outside the input field
+            setShowSearchList(false);
+        }
+    };
+
+    const handleInputBlur = (e: FocusEvent<HTMLInputElement>) => {
+        console.log("inside handleInputBlur");
+        if (
+            searchListRef.current &&
+            !searchListRef.current.contains(e.relatedTarget)
+        ) {
+            console.log("handleInputBlur dont show list");
+            setShowSearchList(false);
+        }
+    };
     return (
         <div>
             <input
@@ -72,11 +123,16 @@ const Search = ({ onSearchResultClick }: Props) => {
                             so you can access and interact with the event data
                             within your event handler function. */
                 onChange={handleChange}
+                onBlur={handleInputBlur}
+                ref={searchInputRef as React.RefObject<HTMLInputElement>}
             />
-            {searchResult && (
+            {showSearchList && searchResult && (
                 <SearchList
                     arr={searchResult}
                     onSearchResultClick={handleSearchResult}
+                    searchListRef={
+                        searchListRef as React.RefObject<HTMLUListElement>
+                    }
                 />
             )}
         </div>
