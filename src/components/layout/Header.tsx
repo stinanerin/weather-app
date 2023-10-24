@@ -8,6 +8,8 @@ import { onSearchResultClick } from "../../models/OnSearchResultClick";
 import { useWeatherContext } from "../../utility/useWeatherContext";
 import { Bookmark } from "../icons/Bookmark";
 
+import SkeletonElement from "../skeletons/SkeletonElement";
+
 const Header = ({
     onSearchResultClick,
 }: {
@@ -23,7 +25,7 @@ const Header = ({
                 <Link to="/" className="link">
                     <img className="logo" src={logo} alt="Logo" />
                 </Link>
-                {weatherData && (
+                {weatherData ? (
                     <p className="row">
                         <FontAwesomeIcon icon="location-dot" />
                         {
@@ -31,6 +33,10 @@ const Header = ({
                         }
                         <span className="heading"> {weatherData.location}</span>
                     </p>
+                ) : (
+                    <div className="skeleton-location">
+                        <SkeletonElement type={"paragraph"} />
+                    </div>
                 )}
             </div>
 

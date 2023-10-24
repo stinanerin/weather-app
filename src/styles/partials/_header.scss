@@ -25,3 +25,12 @@
     }
 }
 
+.skeleton-location {
+    min-width: 117px;
+    height: 1.3rem;
+    @media($md) {
+        height: 1.5rem;
+        min-width: 163px;
+    }
+}
+
