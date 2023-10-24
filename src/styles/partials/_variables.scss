@@ -6,14 +6,28 @@ $body: "Poppins";
 $p-black: hsl(0, 0%, 0%);
 $p-white: hsl(0, 0%, 100%);
 
-$primary-bg: rgb(32, 162, 190);
 
-$primary-accent: rgb(2, 127, 155);
 
 $transparant-1: rgba(255, 255, 255, 0.30);
 $transparant-2: rgba(255, 255, 255, 0.09);
 
 $shadow: rgba(19, 89, 105, 0.197);
+
+$primary-50: #eefcfd;
+$primary-100: #d5f4f8;
+$primary-200: #b0e8f1;
+$primary-300: #79d7e7;
+$primary-400: #3bbbd5;
+$primary-500: #20a2be;
+$primary-600: #1d809d;
+$primary-700: #1e6880;
+$primary-800: #215669;
+$primary-900: #204859;
+$primary-950: #0f2f3d;
+
+$primary-bg: $primary-500;
+
+$primary-accent: $primary-600;
 
 // Radius
 $radius-min: 0.5rem;

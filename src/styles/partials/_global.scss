@@ -17,6 +17,10 @@ body {
     }
 }
 
+.link {
+    display: flex;
+}
+
 .root {
     display: flex;
     flex-direction: column;
@@ -128,8 +132,12 @@ body {
 
 }
 
-.heading {
+.mb {
     margin-bottom: 1rem;
+}
+
+.heading {
+    font-weight: bold;
 }
 
 // RESET
