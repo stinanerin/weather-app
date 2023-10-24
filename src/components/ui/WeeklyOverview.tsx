@@ -17,6 +17,7 @@ import {
     faSnowflake,
     faSun,
     faCloudShowersHeavy,
+    faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
     faCloudSun,
@@ -25,7 +26,8 @@ library.add(
     faCloudBolt,
     faSnowflake,
     faSun,
-    faCloudShowersHeavy
+    faCloudShowersHeavy,
+    faLocationDot
 );
 
 import { WeatherData } from "../../models/WeatherData";
