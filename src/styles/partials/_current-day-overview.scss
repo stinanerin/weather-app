@@ -5,4 +5,13 @@
     padding: $padding;
     margin-bottom: 1rem;
     width: $box-x;
+    font-weight: bold;
+    letter-spacing: 0.6px;
+    .temp {
+        font-size: 2rem;
+        margin-bottom: 0.3em;
+        @media($md) {
+            font-size: 3rem;
+        }
+    }
 }

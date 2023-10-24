@@ -14,7 +14,7 @@ export const MoreInfoWrapper = ({ moreInfo }: { moreInfo: MoreInfo }) => {
 
     return (
         <>
-            <h2 className="heading">Other info</h2>
+            <h2 className="mb">Other info</h2>
             <div className="more-info-wrapper">
                 {infoKeys.map((key, index) => (
                     <InfoCard

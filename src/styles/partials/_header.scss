@@ -3,9 +3,25 @@
     display:flex;
     justify-content: space-between;
     align-items: center;
-    padding: $padding-primary;
+    padding: $padding-quaternary;
+
+    @media($md) {
+        padding: $padding-primary;
+
+    }
     .logo {
         height: 4rem;
+    }
+    .row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        @media($md) {
+            font-size: 1.3rem;
+
+            gap: 1rem
+        }
     }
 }
 
